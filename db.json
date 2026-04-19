@@ -2,9 +2,31 @@
   "projets": [
     {
       "id": 1,
-      "libelle": "Portfolio DevOps",
-      "description": "Mon portfolio cloud",
-      "image": ""
+      "libelle": "Portfolio Cloud & DevOps",
+      "description": "Portfolio React moderne avec sections premium, routing et animations au scroll.",
+      "image": "/images/portfolio-devops.jpg",
+      "details": "Version React fidèle du portfolio initial, avec Tailwind CSS, UX premium et architecture modulaire."
+    },
+    {
+      "id": 2,
+      "libelle": "Dashboard de supervision",
+      "description": "Interface de monitoring pour suivre des services, incidents et métriques d’infrastructure.",
+      "image": "/images/dashboard-monitoring.jpg",
+      "details": "Projet orienté observabilité avec visualisation d’états système, alertes et organisation des données."
+    },
+    {
+      "id": 3,
+      "libelle": "Plateforme CI/CD",
+      "description": "Workflow automatisé de build, test et déploiement pour applications web modernes.",
+      "image": "/images/pipeline-cicd.jpg",
+      "details": "Démonstration d’une chaîne d’intégration continue avec une présentation orientée DevOps."
+    },
+    {
+      "id": 4,
+      "libelle": "API de gestion de projets",
+      "description": "Application CRUD de gestion de projets avec React et API REST simulée.",
+      "image": "/images/api-projects.jpg",
+      "details": "Projet de démonstration autour du routing, des formulaires et de la persistance simulée."
     }
   ]
 }
