@@ -13,58 +13,12 @@ const initialState = {
   details: "",
 };
 
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error("Impossible de lire l'image."));
-    reader.readAsDataURL(file);
-  });
-}
-
-function loadImageFromDataUrl(dataUrl) {
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error("Impossible de charger l'image."));
-    image.src = dataUrl;
-  });
-}
-
-async function compressImage(file, options = {}) {
-  const { maxWidth = 800, maxHeight = 600, quality = 0.55 } = options;
-
-  const dataUrl = await fileToDataUrl(file);
-  const image = await loadImageFromDataUrl(dataUrl);
-
-  let { width, height } = image;
-
-  if (width > maxWidth || height > maxHeight) {
-    const ratio = Math.min(maxWidth / width, maxHeight / height);
-    width = Math.round(width * ratio);
-    height = Math.round(height * ratio);
-  }
-
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-
-  const context = canvas.getContext("2d");
-  if (!context) {
-    throw new Error("Impossible de préparer l'image.");
-  }
-
-  context.drawImage(image, 0, 0, width, height);
-
-  const compressed = canvas.toDataURL("image/jpeg", quality);
-
-  if (compressed.length > 100000) {
-    throw new Error(
-      "Image encore trop volumineuse après compression. Choisissez une image plus légère.",
-    );
-  }
-
-  return compressed;
+function normalizeImagePath(value) {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (trimmed.startsWith("/images/")) return trimmed;
+  if (trimmed.startsWith("images/")) return `/${trimmed}`;
+  return `/images/${trimmed}`;
 }
 
 export default function AjouterProjet() {
@@ -72,7 +26,6 @@ export default function AjouterProjet() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -87,15 +40,12 @@ export default function AjouterProjet() {
         setError("");
 
         const data = await getProjectById(id);
-        const projectData = {
+        setForm({
           libelle: data.libelle || "",
           description: data.description || "",
           image: data.image || "",
           details: data.details || "",
-        };
-
-        setForm(projectData);
-        setPreviewImage(projectData.image || "");
+        });
       } catch (err) {
         console.error(err);
         setError("Impossible de charger le projet à modifier.");
@@ -112,31 +62,6 @@ export default function AjouterProjet() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  async function handleImageChange(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setError("Veuillez sélectionner un fichier image valide.");
-      return;
-    }
-
-    try {
-      setError("");
-      const compressedImage = await compressImage(file, {
-        maxWidth: 800,
-        maxHeight: 600,
-        quality: 0.55,
-      });
-
-      setForm((prev) => ({ ...prev, image: compressedImage }));
-      setPreviewImage(compressedImage);
-    } catch (err) {
-      console.error(err);
-      setError("Impossible de traiter l'image sélectionnée.");
-    }
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
@@ -144,10 +69,15 @@ export default function AjouterProjet() {
     try {
       setSaving(true);
 
+      const payload = {
+        ...form,
+        image: normalizeImagePath(form.image),
+      };
+
       if (isEditing) {
-        await updateProject(id, form);
+        await updateProject(id, payload);
       } else {
-        await addProject(form);
+        await addProject(payload);
       }
 
       navigate("/projets");
@@ -172,6 +102,8 @@ export default function AjouterProjet() {
       </section>
     );
   }
+
+  const previewSrc = normalizeImagePath(form.image);
 
   return (
     <section className="max-w-2xl mx-auto space-y-6">
@@ -218,25 +150,29 @@ export default function AjouterProjet() {
 
         <div>
           <label className="mb-2 block text-sm text-slate-300">
-            Image du projet
+            Nom du fichier image
           </label>
           <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 outline-none file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
+            type="text"
+            name="image"
+            value={form.image}
+            onChange={handleChange}
+            placeholder="portfolio-devops.jpg"
+            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none focus:border-rose-400"
           />
           <p className="mt-2 text-xs text-slate-500">
-            Sélectionnez une image. Elle sera redimensionnée et enregistrée
-            automatiquement.
+            Place l’image dans public/images puis indique son nom.
           </p>
 
-          {previewImage ? (
+          {previewSrc ? (
             <div className="mt-4 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
               <img
-                src={previewImage}
+                src={previewSrc}
                 alt="Aperçu du projet"
                 className="h-56 w-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
               />
             </div>
           ) : null}
