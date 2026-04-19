@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteProject, getAllProjects } from "../services/projetService";
 import ProjectCard from "./ProjectCard";
+import ProjectCardSkeleton from "./ProjectCardSkeleton";
 
 export default function Dossier() {
   const [projects, setProjects] = useState([]);
@@ -57,29 +58,6 @@ export default function Dossier() {
       project.libelle.toLowerCase().includes(value),
     );
   }, [projects, search]);
-
-  if (loading) {
-    return (
-      <section className="space-y-6">
-        <div className="space-y-3">
-          <p className="text-sm font-mono uppercase tracking-wider text-rose-400">
-            Gestion des projets
-          </p>
-          <h1 className="text-3xl font-bold text-white">Liste des projets</h1>
-          <p className="max-w-2xl text-slate-400">
-            Chargement de la collection de projets depuis l’API REST locale.
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-          <div className="flex items-center gap-3 text-slate-400">
-            <span className="inline-block h-3 w-3 animate-pulse rounded-full bg-rose-400"></span>
-            Chargement des projets...
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="space-y-8">
@@ -149,7 +127,7 @@ export default function Dossier() {
 
       <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <p className="text-sm text-slate-400">
-          {filteredProjects.length} projet(s) trouvé(s)
+          {loading ? "Chargement..." : `${filteredProjects.length} projet(s) trouvé(s)`}
         </p>
 
         {search ? (
@@ -163,7 +141,13 @@ export default function Dossier() {
         ) : null}
       </div>
 
-      {filteredProjects.length === 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <ProjectCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : filteredProjects.length === 0 ? (
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-10 text-center">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-800 text-2xl text-slate-500">
             📁
