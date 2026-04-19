@@ -1,10 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import AjouterProjet from "./components/AjouterProjet";
+import DetaillerProjet from "./components/DetaillerProjet";
 import Dossier from "./components/Dossier";
-
-function Detail() {
-  return <h1 className="text-white text-3xl">Détail projet</h1>;
-}
 
 export default function App() {
   return (
@@ -12,7 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dossier />} />
         <Route path="/ajouter" element={<AjouterProjet />} />
-        <Route path="/projets/:id" element={<Detail />} />
+        <Route path="/projets/:id" element={<DetaillerProjet />} />
       </Routes>
     </div>
   );
