@@ -9,6 +9,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dossier />} />
         <Route path="/ajouter" element={<AjouterProjet />} />
+        <Route path="/modifier/:id" element={<AjouterProjet />} />
         <Route path="/projets/:id" element={<DetaillerProjet />} />
       </Routes>
     </div>

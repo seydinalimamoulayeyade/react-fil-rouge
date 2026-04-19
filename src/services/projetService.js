@@ -42,3 +42,15 @@ export async function addProject(project) {
 
   return handleResponse(response);
 }
+
+export async function updateProject(id, project) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(project),
+  });
+
+  return handleResponse(response);
+}

@@ -31,7 +31,7 @@ export default function ProjectCard({ project, onDelete }) {
           </p>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <Link
             to={`/projets/${project.id}`}
             className="text-sm font-medium text-rose-400 hover:underline"
@@ -39,12 +39,21 @@ export default function ProjectCard({ project, onDelete }) {
             Voir le détail
           </Link>
 
-          <button
-            onClick={() => onDelete(project.id)}
-            className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white hover:bg-red-600 transition-colors"
-          >
-            Supprimer
-          </button>
+          <div className="flex gap-2">
+            <Link
+              to={`/modifier/${project.id}`}
+              className="inline-flex items-center rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 hover:border-rose-400 hover:text-rose-400 transition-colors"
+            >
+              Modifier
+            </Link>
+
+            <button
+              onClick={() => onDelete(project.id)}
+              className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white hover:bg-red-600 transition-colors"
+            >
+              Supprimer
+            </button>
+          </div>
         </div>
       </div>
     </article>
