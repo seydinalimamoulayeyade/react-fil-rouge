@@ -32,11 +32,13 @@ function loadImageFromDataUrl(dataUrl) {
 }
 
 async function compressImage(file, options = {}) {
-  const { maxWidth = 1200, maxHeight = 800, quality = 0.75 } = options;
+  const { maxWidth = 800, maxHeight = 600, quality = 0.55 } = options;
+
   const dataUrl = await fileToDataUrl(file);
   const image = await loadImageFromDataUrl(dataUrl);
 
   let { width, height } = image;
+
   if (width > maxWidth || height > maxHeight) {
     const ratio = Math.min(maxWidth / width, maxHeight / height);
     width = Math.round(width * ratio);
@@ -53,7 +55,16 @@ async function compressImage(file, options = {}) {
   }
 
   context.drawImage(image, 0, 0, width, height);
-  return canvas.toDataURL("image/jpeg", quality);
+
+  const compressed = canvas.toDataURL("image/jpeg", quality);
+
+  if (compressed.length > 100000) {
+    throw new Error(
+      "Image encore trop volumineuse après compression. Choisissez une image plus légère.",
+    );
+  }
+
+  return compressed;
 }
 
 export default function AjouterProjet() {
@@ -113,9 +124,9 @@ export default function AjouterProjet() {
     try {
       setError("");
       const compressedImage = await compressImage(file, {
-        maxWidth: 1200,
-        maxHeight: 800,
-        quality: 0.75,
+        maxWidth: 800,
+        maxHeight: 600,
+        quality: 0.55,
       });
 
       setForm((prev) => ({ ...prev, image: compressedImage }));
@@ -216,7 +227,8 @@ export default function AjouterProjet() {
             className="block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 outline-none file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
           />
           <p className="mt-2 text-xs text-slate-500">
-            Sélectionnez une image. Elle sera redimensionnée et enregistrée automatiquement.
+            Sélectionnez une image. Elle sera redimensionnée et enregistrée
+            automatiquement.
           </p>
 
           {previewImage ? (
