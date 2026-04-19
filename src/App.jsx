@@ -2,16 +2,17 @@ import { Route, Routes } from "react-router-dom";
 import AjouterProjet from "./components/AjouterProjet";
 import DetaillerProjet from "./components/DetaillerProjet";
 import Dossier from "./components/Dossier";
+import Layout from "./components/Layout";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-950 p-10">
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Dossier />} />
         <Route path="/ajouter" element={<AjouterProjet />} />
         <Route path="/modifier/:id" element={<AjouterProjet />} />
         <Route path="/projets/:id" element={<DetaillerProjet />} />
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 }
