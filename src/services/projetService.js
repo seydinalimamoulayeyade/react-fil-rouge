@@ -1,8 +1,13 @@
-const API_URL = "http://localhost:3001/projets";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:3001"}/projets`;
 
 async function handleResponse(response) {
   if (!response.ok) {
-    throw new Error("Erreur API");
+    let message = `Erreur ${response.status}`;
+    try {
+      const data = await response.json();
+      if (data && data.message) message = data.message;
+    } catch (e) {}
+    throw new Error(message);
   }
 
   if (response.status === 204) {
@@ -18,10 +23,7 @@ export async function getAllProjects() {
 }
 
 export async function deleteProject(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-  });
-
+  const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
   await handleResponse(response);
   return true;
 }
@@ -34,23 +36,17 @@ export async function getProjectById(id) {
 export async function addProject(project) {
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(project),
   });
-
   return handleResponse(response);
 }
 
 export async function updateProject(id, project) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(project),
   });
-
   return handleResponse(response);
 }

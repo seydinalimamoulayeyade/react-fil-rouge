@@ -18,7 +18,7 @@ export default function DetaillerProjet() {
         setProject(data);
       } catch (err) {
         console.error(err);
-        setError("Projet introuvable.");
+        setError(err.message || "Impossible de charger le projet.");
       } finally {
         setLoading(false);
       }
@@ -30,7 +30,7 @@ export default function DetaillerProjet() {
   if (loading) {
     return (
       <section className="max-w-4xl mx-auto space-y-6">
-        <Link to="/" className="text-sm text-rose-400 hover:underline">
+        <Link to="/projets" className="text-sm text-rose-400 hover:underline">
           ← Retour à la liste
         </Link>
 
@@ -44,7 +44,7 @@ export default function DetaillerProjet() {
   if (error || !project) {
     return (
       <section className="max-w-4xl mx-auto space-y-6">
-        <Link to="/" className="text-sm text-rose-400 hover:underline">
+        <Link to="/projets" className="text-sm text-rose-400 hover:underline">
           ← Retour à la liste
         </Link>
 
@@ -60,14 +60,13 @@ export default function DetaillerProjet() {
   return (
     <section className="max-w-5xl mx-auto space-y-8">
       <Link
-        to="/"
+        to="/projets"
         className="inline-flex text-sm text-rose-400 hover:underline"
       >
         ← Retour à la liste
       </Link>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Image */}
         <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
           {project.image ? (
             <img
@@ -82,7 +81,6 @@ export default function DetaillerProjet() {
           )}
         </div>
 
-        {/* Contenu */}
         <div className="space-y-6">
           <div>
             <p className="text-sm font-mono uppercase tracking-wider text-rose-400">
