@@ -4,6 +4,7 @@ import DetaillerProjet from "./components/DetaillerProjet";
 import Dossier from "./components/Dossier";
 import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
+import NotFound from "./components/NotFound";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/ajouter" element={<AjouterProjet />} />
         <Route path="/modifier/:id" element={<AjouterProjet />} />
         <Route path="/projets/:id" element={<DetaillerProjet />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
