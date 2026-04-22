@@ -41,7 +41,7 @@ export default function Dossier() {
       setError("");
       setSuccess("");
       await deleteProject(id);
-      setProjects((prev) => prev.filter((project) => project.id !== id));
+      setProjects((prev) => prev.filter((project) => (project._id || project.id) !== id));
       setSuccess("Projet supprimé avec succès.");
     } catch (err) {
       console.error(err);
@@ -161,7 +161,7 @@ export default function Dossier() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredProjects.map((project) => (
             <ProjectCard
-              key={project.id}
+              key={project._id || project.id}
               project={project}
               onDelete={handleDelete}
             />
