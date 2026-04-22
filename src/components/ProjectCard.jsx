@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 export default function ProjectCard({ project, onDelete }) {
+  const projectId = project._id || project.id;
+
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-rose-400/70 hover:shadow-[0_0_0_1px_rgba(244,63,94,0.12)]">
       <div className="relative h-48 overflow-hidden bg-slate-800">
@@ -22,7 +24,7 @@ export default function ProjectCard({ project, onDelete }) {
       <div className="p-5 space-y-4">
         <div className="space-y-2">
           <Link
-            to={`/projets/${project.id}`}
+            to={`/projets/${projectId}`}
             className="line-clamp-2 text-lg font-semibold text-white transition-colors hover:text-rose-400"
           >
             {project.libelle}
@@ -35,7 +37,7 @@ export default function ProjectCard({ project, onDelete }) {
 
         <div className="flex items-center justify-between gap-3 pt-2">
           <Link
-            to={`/projets/${project.id}`}
+            to={`/projets/${projectId}`}
             className="text-sm font-medium text-rose-400 transition-colors hover:text-rose-300"
           >
             Voir le détail →
@@ -43,14 +45,14 @@ export default function ProjectCard({ project, onDelete }) {
 
           <div className="flex gap-2">
             <Link
-              to={`/modifier/${project.id}`}
+              to={`/modifier/${projectId}`}
               className="inline-flex items-center rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition-all hover:border-rose-400 hover:text-rose-400"
             >
               Modifier
             </Link>
 
             <button
-              onClick={() => onDelete(project.id)}
+              onClick={() => onDelete(projectId)}
               className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white transition-all hover:bg-red-600"
             >
               Supprimer
