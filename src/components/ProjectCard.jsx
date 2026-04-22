@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProjectCard({ project, onDelete }) {
+  const { isAuthenticated } = useAuth();
+
   const projectId = project._id || project.id;
 
   return (
@@ -43,21 +46,23 @@ export default function ProjectCard({ project, onDelete }) {
             Voir le détail →
           </Link>
 
-          <div className="flex gap-2">
-            <Link
-              to={`/modifier/${projectId}`}
-              className="inline-flex items-center rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition-all hover:border-rose-400 hover:text-rose-400"
-            >
-              Modifier
-            </Link>
+          {isAuthenticated && (
+            <div className="flex gap-2">
+              <Link
+                to={`/modifier/${projectId}`}
+                className="inline-flex items-center rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition-all hover:border-rose-400 hover:text-rose-400"
+              >
+                Modifier
+              </Link>
 
-            <button
-              onClick={() => onDelete(projectId)}
-              className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white transition-all hover:bg-red-600"
-            >
-              Supprimer
-            </button>
-          </div>
+              <button
+                onClick={() => onDelete(projectId)}
+                className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white transition-all hover:bg-red-600"
+              >
+                Supprimer
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </article>

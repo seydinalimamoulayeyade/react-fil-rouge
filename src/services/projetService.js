@@ -1,6 +1,21 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const API_URL = `${API_BASE_URL}/projets`;
 
+function getAuthHeaders(withJson = false) {
+  const token = localStorage.getItem("token");
+  const headers = {};
+
+  if (withJson) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
 async function handleResponse(response) {
   if (!response.ok) {
     let message = `Erreur ${response.status}`;
@@ -24,7 +39,10 @@ export async function getAllProjects() {
 }
 
 export async function deleteProject(id) {
-  const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  });
   await handleResponse(response);
   return true;
 }
@@ -37,7 +55,7 @@ export async function getProjectById(id) {
 export async function addProject(project) {
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(true),
     body: JSON.stringify(project),
   });
   return handleResponse(response);
@@ -46,7 +64,7 @@ export async function addProject(project) {
 export async function updateProject(id, project) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(true),
     body: JSON.stringify(project),
   });
   return handleResponse(response);
