@@ -5,12 +5,14 @@ import Dossier from "./components/Dossier";
 import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
 import NotFound from "./components/NotFound";
+import Login from "./pages/Login";
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/projets" element={<Dossier />} />
         <Route path="/ajouter" element={<AjouterProjet />} />
         <Route path="/modifier/:id" element={<AjouterProjet />} />
