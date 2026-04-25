@@ -11,6 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve uploads
+app.use('/uploads', express.static('uploads'));
+
 // DB connection
 connectDB();
 
