@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProjectById } from "../services/projetService";
+import { getProjectById, getImageUrl } from "../services/projetService";
 
 export default function DetaillerProjet() {
   const { id } = useParams();
@@ -57,6 +57,8 @@ export default function DetaillerProjet() {
     );
   }
 
+  const imageSrc = getImageUrl(project.image);
+
   return (
     <section className="max-w-5xl mx-auto space-y-8">
       <Link
@@ -68,9 +70,9 @@ export default function DetaillerProjet() {
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
-          {project.image ? (
+          {imageSrc ? (
             <img
-              src={project.image}
+              src={imageSrc}
               alt={project.libelle}
               className="h-full w-full object-cover"
             />
