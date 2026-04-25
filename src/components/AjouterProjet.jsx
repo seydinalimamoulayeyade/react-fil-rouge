@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   addProject,
+  getImageUrl,
   getProjectById,
   updateProject,
 } from "../services/projetService";
@@ -13,16 +14,9 @@ const initialState = {
   details: "",
 };
 
-function normalizeImagePath(value) {
-  const trimmed = value.trim();
-  if (!trimmed) return "";
-  if (trimmed.startsWith("/images/")) return trimmed;
-  if (trimmed.startsWith("images/")) return `/${trimmed}`;
-  return `/images/${trimmed}`;
-}
-
 export default function AjouterProjet() {
   const [form, setForm] = useState(initialState);
+  const [imageFile, setImageFile] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,9 +51,41 @@ export default function AjouterProjet() {
     loadProject();
   }, [id, isEditing]);
 
+  const previewSrc = useMemo(() => {
+    if (imageFile) return URL.createObjectURL(imageFile);
+    return getImageUrl(form.image);
+  }, [imageFile, form.image]);
+
+  useEffect(() => {
+    return () => {
+      if (imageFile && previewSrc.startsWith("blob:")) {
+        URL.revokeObjectURL(previewSrc);
+      }
+    };
+  }, [imageFile, previewSrc]);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleImageChange(event) {
+    const file = event.target.files?.[0];
+    setImageFile(file || null);
+  }
+
+  function buildFormData() {
+    const formData = new FormData();
+
+    formData.append("libelle", form.libelle);
+    formData.append("description", form.description);
+    formData.append("details", form.details);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    return formData;
   }
 
   async function handleSubmit(event) {
@@ -68,11 +94,7 @@ export default function AjouterProjet() {
 
     try {
       setSaving(true);
-
-      const payload = {
-        ...form,
-        image: normalizeImagePath(form.image),
-      };
+      const payload = buildFormData();
 
       if (isEditing) {
         await updateProject(id, payload);
@@ -103,8 +125,6 @@ export default function AjouterProjet() {
     );
   }
 
-  const previewSrc = normalizeImagePath(form.image);
-
   return (
     <section className="max-w-2xl mx-auto space-y-6">
       <div>
@@ -113,8 +133,8 @@ export default function AjouterProjet() {
         </h1>
         <p className="text-slate-400 mt-2">
           {isEditing
-            ? "Mettez à jour les informations du projet."
-            : "Remplissez le formulaire pour créer un nouveau projet."}
+            ? "Mettez à jour les informations du projet. Vous pouvez conserver l'image actuelle ou en choisir une nouvelle."
+            : "Remplissez le formulaire et choisissez une image pour créer un nouveau projet."}
         </p>
       </div>
 
@@ -150,18 +170,17 @@ export default function AjouterProjet() {
 
         <div>
           <label className="mb-2 block text-sm text-slate-300">
-            Nom du fichier image
+            Image du projet
           </label>
           <input
-            type="text"
+            type="file"
             name="image"
-            value={form.image}
-            onChange={handleChange}
-            placeholder="portfolio-devops.jpg"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none focus:border-rose-400"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full rounded-xl border border-dashed border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
           />
           <p className="mt-2 text-xs text-slate-500">
-            Place l’image dans public/images puis indique son nom.
+            Formats acceptés : JPG, PNG, WEBP ou GIF. Taille maximale : 5 Mo.
           </p>
 
           {previewSrc ? (
@@ -175,7 +194,11 @@ export default function AjouterProjet() {
                 }}
               />
             </div>
-          ) : null}
+          ) : (
+            <div className="mt-4 flex h-40 items-center justify-center rounded-2xl border border-dashed border-slate-800 bg-slate-950 text-sm text-slate-500">
+              Aucun aperçu disponible
+            </div>
+          )}
         </div>
 
         <div>
@@ -191,7 +214,7 @@ export default function AjouterProjet() {
 
         {error ? <p className="text-sm text-rose-400">{error}</p> : null}
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             type="submit"
             disabled={saving}
