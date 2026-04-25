@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+export const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "");
 const API_URL = `${API_BASE_URL}/projets`;
 
 function getAuthHeaders(withJson = false) {
@@ -8,6 +9,17 @@ function getAuthHeaders(withJson = false) {
   if (withJson) {
     headers["Content-Type"] = "application/json";
   }
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
+function getMultipartAuthHeaders() {
+  const token = localStorage.getItem("token");
+  const headers = {};
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
@@ -33,6 +45,13 @@ async function handleResponse(response) {
   return response.json();
 }
 
+export function getImageUrl(imagePath) {
+  if (!imagePath) return "";
+  if (imagePath.startsWith("http")) return imagePath;
+  if (imagePath.startsWith("/uploads/")) return `${API_ORIGIN}${imagePath}`;
+  return imagePath;
+}
+
 export async function getAllProjects() {
   const response = await fetch(API_URL);
   return handleResponse(response);
@@ -52,20 +71,20 @@ export async function getProjectById(id) {
   return handleResponse(response);
 }
 
-export async function addProject(project) {
+export async function addProject(projectFormData) {
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: getAuthHeaders(true),
-    body: JSON.stringify(project),
+    headers: getMultipartAuthHeaders(),
+    body: projectFormData,
   });
   return handleResponse(response);
 }
 
-export async function updateProject(id, project) {
+export async function updateProject(id, projectFormData) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: getAuthHeaders(true),
-    body: JSON.stringify(project),
+    headers: getMultipartAuthHeaders(),
+    body: projectFormData,
   });
   return handleResponse(response);
 }

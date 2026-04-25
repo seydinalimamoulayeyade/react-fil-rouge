@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { getImageUrl } from "../services/projetService";
 
 export default function ProjectCard({ project, onDelete }) {
   const { isAuthenticated } = useAuth();
 
   const projectId = project._id || project.id;
+  const imageSrc = getImageUrl(project.image);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-rose-400/70 hover:shadow-[0_0_0_1px_rgba(244,63,94,0.12)]">
       <div className="relative h-48 overflow-hidden bg-slate-800">
-        {project.image ? (
+        {imageSrc ? (
           <img
-            src={project.image}
+            src={imageSrc}
             alt={project.libelle}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
