@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
 import NotFound from "./components/NotFound";
 import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
@@ -14,8 +15,12 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/projets" element={<Dossier />} />
-        <Route path="/ajouter" element={<AjouterProjet />} />
-        <Route path="/modifier/:id" element={<AjouterProjet />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/ajouter" element={<AjouterProjet />} />
+          <Route path="/modifier/:id" element={<AjouterProjet />} />
+        </Route>
+
         <Route path="/projets/:id" element={<DetaillerProjet />} />
         <Route path="*" element={<NotFound />} />
       </Route>
