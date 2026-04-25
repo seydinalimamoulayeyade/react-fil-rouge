@@ -23,9 +23,19 @@ exports.getProjectById = async (req, res) => {
 };
 
 exports.createProject = async (req, res) => {
-  const project = new Project(req.body);
-  const saved = await project.save();
-  res.status(201).json(saved);
+  try {
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : '';
+
+    const project = new Project({
+      ...req.body,
+      image: imagePath,
+    });
+
+    const saved = await project.save();
+    res.status(201).json(saved);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la création du projet' });
+  }
 };
 
 exports.updateProject = async (req, res) => {
@@ -35,13 +45,25 @@ exports.updateProject = async (req, res) => {
     return res.status(400).json({ message: 'Identifiant de projet invalide' });
   }
 
-  const project = await Project.findByIdAndUpdate(id, req.body, { new: true });
+  try {
+    const updateData = {
+      ...req.body,
+    };
 
-  if (!project) {
-    return res.status(404).json({ message: 'Projet non trouvé' });
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+
+    const project = await Project.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!project) {
+      return res.status(404).json({ message: 'Projet non trouvé' });
+    }
+
+    res.json(project);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la mise à jour' });
   }
-
-  res.json(project);
 };
 
 exports.deleteProject = async (req, res) => {
