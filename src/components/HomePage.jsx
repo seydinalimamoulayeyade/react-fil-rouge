@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllProjects } from "../services/projetService";
+import { getAllProjects, getImageUrl } from "../services/projetService";
 import RevealSection from "./RevealSection";
 
 function FeaturedProjectCard({ project }) {
   const projectId = project._id || project.id;
+  const imageSrc = getImageUrl(project.image);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:-translate-y-1 hover:border-rose-400/60">
       <div className="relative h-52 overflow-hidden bg-slate-800">
-        {project.image ? (
+        {imageSrc ? (
           <img
-            src={project.image}
+            src={imageSrc}
             alt={project.libelle}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
