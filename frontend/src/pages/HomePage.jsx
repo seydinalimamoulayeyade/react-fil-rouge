@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAllProjects, getImageUrl } from "../services/projetService";
-import RevealSection from "./RevealSection";
+import RevealSection from "../components/RevealSection";
 
 function FeaturedProjectCard({ project }) {
   const projectId = project._id || project.id;
