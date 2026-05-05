@@ -1,195 +1,192 @@
-# Portfolio React Cloud & DevOps - Fullstack
+# devops-portfolio-mern
 
-## Nouvelle version fullstack
+> Application fullstack MERN containerisée — fil rouge de la formation Cloud & DevOps à l'Orange Digital Center (ODC).
 
-Ce projet utilise maintenant :
-- Frontend React (Vite + Tailwind)
-- Backend Node.js + Express
-- MongoDB avec Mongoose
-- Authentification JWT
-- Upload local d'images avec Multer
+![Stack](https://img.shields.io/badge/Stack-MERN-61DAFB?style=flat-square&logo=react)
+![Docker](https://img.shields.io/badge/Docker-Containerisé-2496ED?style=flat-square&logo=docker)
+![License](https://img.shields.io/badge/Licence-MIT-green?style=flat-square)
 
 ---
 
-## Lancer avec Docker
+## Présentation
 
-### 1. Build et lancement
+**devops-portfolio-mern** est une application de gestion de portfolio technique, conçue pour servir de projet fil rouge tout au long de la formation DevOps. Chaque module de la formation ajoute une couche concrète au même projet — de la containerisation Docker jusqu'au monitoring Prometheus/Grafana, en passant par Jenkins, Kubernetes et Terraform.
+
+### Stack technique
+
+| Couche | Technologie |
+|--------|-------------|
+| Frontend | React 18 + Vite + Tailwind CSS |
+| Backend | Node.js + Express |
+| Base de données | MongoDB + Mongoose |
+| Auth | JWT (JSON Web Tokens) |
+| Upload | Multer (stockage local) |
+| Containerisation | Docker + Docker Compose |
+
+---
+
+## Structure du projet
+
+```
+devops-portfolio-mern/
+├── frontend/                   # Application React (Vite)
+│   ├── src/
+│   │   ├── components/         # Composants UI réutilisables
+│   │   ├── pages/              # Vues / routes
+│   │   ├── context/            # État global (AuthContext)
+│   │   ├── services/           # Appels API (axios)
+│   │   └── hooks/              # Custom hooks
+│   ├── public/
+│   ├── Dockerfile
+│   └── package.json
+├── backend/                    # API Node.js / Express
+│   ├── src/
+│   │   ├── config/             # Connexion MongoDB
+│   │   ├── controllers/        # Logique métier
+│   │   ├── middleware/         # Auth, upload, erreurs
+│   │   ├── models/             # Schémas Mongoose
+│   │   ├── routes/             # Endpoints REST
+│   │   └── utils/              # Fonctions helpers
+│   ├── uploads/                # Images uploadées (non versionné)
+│   ├── Dockerfile
+│   └── package.json
+├── docker-compose.yml
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Démarrage rapide
+
+### Prérequis
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé et lancé
+- Git
+
+### Lancement avec Docker Compose
 
 ```bash
+git clone https://github.com/seydinalimamoulayeyade/devops-portfolio-mern.git
+cd devops-portfolio-mern
 docker compose up --build
 ```
 
-### 2. Acces aux services
-
-- Frontend : http://localhost:5173
-- Backend : http://localhost:5000
-- API projets : http://localhost:5000/api/projets
-- MongoDB : mongodb://localhost:27017
-
-### 3. Commandes Docker utiles
-
-Lister les conteneurs actifs :
-
-```bash
-docker ps
-```
-
-Lister tous les conteneurs :
-
-```bash
-docker ps -a
-```
-
-Voir les logs de tous les services :
-
-```bash
-docker compose logs -f
-```
-
-Voir les logs d'un service :
-
-```bash
-docker compose logs -f backend
-docker compose logs -f frontend
-docker compose logs -f mongo
-```
-
-Entrer dans un conteneur :
-
-```bash
-docker exec -it backend sh
-docker exec -it frontend sh
-```
-
-Entrer dans MongoDB :
-
-```bash
-docker exec -it mongo mongosh
-```
-
-Arreter les conteneurs :
-
-```bash
-docker compose down
-```
-
-Arreter et supprimer aussi le volume MongoDB :
-
-```bash
-docker compose down -v
-```
-
-### 4. Configuration Docker
-
-Dans Docker Compose, le backend se connecte a MongoDB avec le nom du service :
-
-```env
-MONGO_URI=mongodb://mongo:27017/filrouge
-```
-
-Ici, `mongo` est resolu par le DNS interne de Docker Compose.
-
-### 5. Volumes
-
-Le projet utilise deux types de stockage :
-
-```yaml
-./backend/uploads:/app/uploads
-mongo_data:/data/db
-```
-
-- `./backend/uploads:/app/uploads` est un bind mount pour conserver les images uploadees sur la machine.
-- `mongo_data:/data/db` est un volume Docker pour conserver les donnees MongoDB.
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:5000/api |
+| MongoDB | mongodb://localhost:27017 |
 
 ---
 
-## Lancement manuel sans Docker
+## Configuration
 
-### 1. Backend
+### Variables d'environnement
+
+Copie les fichiers d'exemple et renseigne les valeurs :
 
 ```bash
-cd backend
-npm install
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
 ```
 
-Creer un fichier `.env` dans `backend/` :
+**`backend/.env`**
 
 ```env
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/filrouge
-JWT_SECRET=supersecretkey
+MONGO_URI=mongodb://mongo:27017/filrouge
+JWT_SECRET=change_this_secret
 ```
 
-Lancer :
-
-```bash
-npm run dev
-```
-
-### 2. Frontend
-
-Creer un fichier `.env` a la racine :
+**`frontend/.env`**
 
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Puis :
+> En environnement Docker Compose, `mongo` est résolu par le DNS interne — ne pas remplacer par `localhost`.
+
+---
+
+## Lancement sans Docker
+
+### Backend
 
 ```bash
+cd backend
 npm install
 npm run dev
 ```
 
----
-
-## API connectee
-
-Routes principales :
+### Frontend
 
 ```bash
-GET    /api/projets
-GET    /api/projets/:id
-POST   /api/projets
-PUT    /api/projets/:id
-DELETE /api/projets/:id
+cd frontend
+npm install
+npm run dev
 ```
 
-Routes auth :
+> MongoDB doit tourner localement sur le port `27017`.
 
-```bash
-POST /api/auth/register
-POST /api/auth/login
+---
+
+## API REST
+
+### Projets
+
+```
+GET    /api/projets          Liste tous les projets
+GET    /api/projets/:id      Détail d'un projet
+POST   /api/projets          Créer un projet (auth requise)
+PUT    /api/projets/:id      Modifier un projet (auth requise)
+DELETE /api/projets/:id      Supprimer un projet (auth requise)
+```
+
+### Authentification
+
+```
+POST   /api/auth/register    Créer un compte
+POST   /api/auth/login       Connexion — retourne un token JWT
 ```
 
 ---
 
-## Objectif pedagogique Docker
+## Volumes Docker
 
-Ce setup permet de pratiquer :
-
-- Dockerfile
-- build d'images
-- lancement de conteneurs
-- exposition de ports
-- reseaux Docker Compose
-- DNS integre Docker
-- volumes Docker
-- bind mounts
-- logs
-- exec dans un conteneur
-- orchestration avec Docker Compose
+```yaml
+./backend/uploads:/app/uploads   # Bind mount — images persistées sur la machine hôte
+mongo_data:/data/db              # Volume Docker — données MongoDB persistées
+```
 
 ---
 
-## Objectif du projet
+## Roadmap DevOps
 
-Application fullstack cloud-ready avec :
+Ce projet évolue module par module tout au long de la formation :
 
-- architecture propre
-- API REST reelle
-- frontend connecte
-- authentification JWT
-- upload d'images
-- base MongoDB
-- dockerisation pedagogique
+| Module | Technologie | Statut |
+|--------|-------------|--------|
+| 1 | DevOps intro — Git flow, branching, README | ✅ Fait |
+| 2 | Docker — Dockerfile, Docker Compose | ✅ Fait |
+| 3 | Jenkins — Pipeline CI/CD | 🔜 À venir |
+| 4 | SonarQube — Qualité du code | 🔜 À venir |
+| 5 | Kubernetes — Orchestration | 🔜 À venir |
+| 6 | Terraform — Infrastructure as Code | 🔜 À venir |
+| 7 | Prometheus / Grafana — Monitoring | 🔜 À venir |
+| 8 | Trivy — Scan de sécurité | 🔜 À venir |
+| 9 | Outils IA pour DevOps | 🔜 À venir |
+
+---
+
+## Auteur
+
+**Seydina Lima Mamoulaye Yade**
+Formation Cloud AWS & DevOps — Orange Digital Center (ODC)
+[GitHub](https://github.com/seydinalimamoulayeyade)
+
+---
+
+## Licence
+
+MIT
