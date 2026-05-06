@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
   res.send('API backend fonctionnelle 🚀');
 });
 
+// Endpoint de santé pour les vérifications de disponibilité
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
