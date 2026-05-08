@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/82 backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-5xl items-center justify-between px-5 sm:px-6">
+      <div className="mx-auto flex h-[72px] max-w-5xl items-center justify-between px-4 sm:px-6">
         <Link
           to="/"
           onClick={closeMenu}
@@ -129,7 +129,7 @@ export default function Navbar() {
 
       {menuOpen ? (
         <div className="motion-fade-up border-t border-slate-800 bg-slate-950 md:hidden">
-          <div className="mx-auto flex max-w-5xl flex-col gap-3 px-5 py-5 sm:px-6">
+          <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-5 sm:px-6">
             <NavLink to="/" end onClick={closeMenu} className={getNavLinkClass}>
               Accueil
             </NavLink>
@@ -138,7 +138,7 @@ export default function Navbar() {
             </NavLink>
             {isAuthenticated ? (
               <>
-                <div className="inline-flex items-center justify-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-5 py-3 text-sm font-medium text-cyan-200">
+                <div className="inline-flex items-center justify-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-4 py-3 text-sm font-medium text-cyan-200">
                   <svg
                     aria-hidden="true"
                     viewBox="0 0 24 24"

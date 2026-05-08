@@ -91,7 +91,7 @@ const toolGroups = [
 function ToolLogo({ icon }) {
   const commonProps = {
     "aria-hidden": "true",
-    className: "h-7 w-7",
+    className: "h-6 w-6 sm:h-7 sm:w-7",
     fill: "none",
     stroke: "currentColor",
     strokeLinecap: "round",
@@ -507,9 +507,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="space-y-14 pb-12 sm:space-y-20">
+    <div className="space-y-10 pb-10 sm:space-y-20 sm:pb-12">
       <RevealSection>
-        <section className="relative isolate overflow-hidden rounded-lg border border-slate-800 px-5 py-12 shadow-2xl shadow-slate-950/40 sm:px-8 sm:py-16 lg:min-h-[520px] lg:px-10">
+        <section className="relative isolate overflow-hidden rounded-lg border border-slate-800 px-4 py-10 shadow-2xl shadow-slate-950/40 sm:px-8 sm:py-16 lg:min-h-[520px] lg:px-10">
           <div
             className="motion-hero-bg absolute inset-0 -z-20 bg-cover bg-center"
             style={{ backgroundImage: "url('/images/dashboard-monitoring.jpg')" }}
@@ -517,20 +517,20 @@ export default function HomePage() {
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/45" />
           <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
 
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
-            <div className="max-w-3xl space-y-8">
-              <div className="space-y-5">
-                <p className="motion-fade-up text-sm font-mono uppercase tracking-[0.3em] text-cyan-300">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
+            <div className="max-w-3xl space-y-6 sm:space-y-8">
+              <div className="space-y-4 sm:space-y-5">
+                <p className="motion-fade-up text-xs font-mono uppercase tracking-[0.2em] text-cyan-300 sm:text-sm sm:tracking-[0.3em]">
                   Cloud / DevOps / Fullstack
                 </p>
                 <h1
-                  className="motion-fade-up max-w-3xl text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl"
+                  className="motion-fade-up max-w-3xl text-[1.9rem] font-bold leading-[1.08] text-white sm:text-4xl sm:leading-tight lg:text-5xl"
                   style={{ "--motion-delay": "90ms" }}
                 >
                   Je conçois, automatise et déploie des applications prêtes pour le cloud.
                 </h1>
                 <p
-                  className="motion-fade-up max-w-2xl text-base leading-8 text-slate-300 sm:text-lg"
+                  className="motion-fade-up max-w-2xl text-sm leading-7 text-slate-300 sm:text-lg sm:leading-8"
                   style={{ "--motion-delay": "180ms" }}
                 >
                   Développeur DevOps orienté AWS, je construis des pipelines Jenkins, des déploiements Docker/Kubernetes et des applications MERN ou Laravel avec Tailwind.
@@ -538,31 +538,31 @@ export default function HomePage() {
               </div>
 
               <div
-                className="motion-fade-up flex flex-wrap gap-4"
+                className="motion-fade-up flex flex-wrap gap-3 sm:gap-4"
                 style={{ "--motion-delay": "260ms" }}
               >
                 <Link
                   to="/projets"
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-rose-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 sm:w-auto sm:px-6"
                 >
                   Voir mes projets
                 </Link>
                 <a
                   href="#contact"
-                  className="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-sm font-medium text-slate-100 transition-colors hover:border-cyan-300 hover:text-cyan-200 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center rounded-lg border border-white/20 px-5 py-3 text-sm font-medium text-slate-100 transition-colors hover:border-cyan-300 hover:text-cyan-200 sm:w-auto sm:px-6"
                 >
                   Discuter d'un déploiement
                 </a>
               </div>
 
-              <div className="grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-3">
+              <div className="grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-3 sm:gap-4 sm:pt-6">
                 {stackItems.map(([title, text], index) => (
                   <div
                     key={title}
                     className="motion-fade-up"
                     style={{ "--motion-delay": `${340 + index * 90}ms` }}
                   >
-                    <p className="text-2xl font-bold text-white">{title}</p>
+                    <p className="text-xl font-bold text-white sm:text-2xl">{title}</p>
                     <p className="mt-2 text-sm leading-6 text-slate-300">{text}</p>
                   </div>
                 ))}
@@ -575,10 +575,10 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section className="glass-panel rounded-lg p-5 sm:p-6">
+        <section className="glass-panel rounded-lg p-4 sm:p-6">
           <div className="flex flex-col gap-4 border-b border-slate-800 pb-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl space-y-3">
-              <p className="text-sm font-mono uppercase tracking-[0.3em] text-cyan-300">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-cyan-300 sm:text-sm sm:tracking-[0.3em]">
                 Outils Cloud & DevOps
               </p>
               <h2 className="text-balance text-2xl font-bold text-white sm:text-3xl">
@@ -598,11 +598,11 @@ export default function HomePage() {
             {toolGroups.map(({ title, tools }, index) => (
               <div
                 key={title}
-                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-950/55 p-5 hover:border-cyan-300/35"
+                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-950/55 p-4 hover:border-cyan-300/35 sm:p-5"
                 style={{ "--motion-delay": `${index * 70}ms` }}
               >
                 <p className="text-lg font-semibold text-white">{title}</p>
-                <div className="mt-5 grid grid-cols-4 gap-3">
+                <div className="mt-4 grid grid-cols-4 gap-2 sm:mt-5 sm:gap-3">
                   {tools.map(([name, icon]) => (
                     <span
                       key={name}
@@ -613,7 +613,7 @@ export default function HomePage() {
                     >
                       <ToolLogo icon={icon} />
                       <span className="sr-only">{name}</span>
-                      <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-medium text-slate-100 opacity-0 shadow-xl shadow-slate-950/40 transition-opacity group-hover/tool:opacity-100 group-focus-visible/tool:opacity-100">
+                      <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-medium text-slate-100 opacity-0 shadow-xl shadow-slate-950/40 transition-opacity group-hover/tool:opacity-100 group-focus-visible/tool:opacity-100 sm:block">
                         {name}
                       </span>
                     </span>
@@ -628,7 +628,7 @@ export default function HomePage() {
       <RevealSection>
         <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-4">
-            <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
               Stack actuelle
             </p>
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -643,7 +643,7 @@ export default function HomePage() {
             {approachItems.map((item, index) => (
               <div
                 key={item}
-                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-5 text-sm leading-7 text-slate-300 hover:border-cyan-300/40"
+                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 text-sm leading-7 text-slate-300 hover:border-cyan-300/40 sm:p-5"
                 style={{ "--motion-delay": `${index * 80}ms` }}
               >
                 {item}
@@ -654,9 +654,9 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section className="grid gap-8 border-t border-slate-800 pt-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <section className="grid gap-8 border-t border-slate-800 pt-12 sm:pt-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div className="space-y-4">
-            <p className="text-sm font-mono uppercase tracking-[0.3em] text-cyan-300">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-cyan-300 sm:text-sm sm:tracking-[0.3em]">
               Cycle DevOps
             </p>
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -668,7 +668,7 @@ export default function HomePage() {
             {deliveryItems.map(([title, text], index) => (
               <div
                 key={title}
-                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-5 hover:border-rose-400/40"
+                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 hover:border-rose-400/40 sm:p-5"
                 style={{ "--motion-delay": `${index * 110}ms` }}
               >
                 <div className="mb-5 h-1 overflow-hidden rounded-full bg-slate-800">
@@ -683,9 +683,9 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section id="about" className="grid gap-8 border-t border-slate-800 pt-16 lg:grid-cols-2 lg:items-start">
+        <section id="about" className="grid gap-8 border-t border-slate-800 pt-12 sm:pt-16 lg:grid-cols-2 lg:items-start">
           <div className="space-y-4">
-            <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
               À propos
             </p>
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -707,7 +707,7 @@ export default function HomePage() {
       <RevealSection>
         <section id="competences" className="space-y-8">
           <div className="space-y-3">
-            <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
               Compétences
             </p>
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -719,7 +719,7 @@ export default function HomePage() {
             {skillItems.map(([title, text], index) => (
               <div
                 key={title}
-                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-5 hover:border-cyan-300/40"
+                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 hover:border-cyan-300/40 sm:p-5"
                 style={{ "--motion-delay": `${index * 80}ms` }}
               >
                 <h3 className="text-lg font-semibold text-white">{title}</h3>
@@ -731,10 +731,10 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section className="space-y-8 border-t border-slate-800 pt-16">
+        <section className="space-y-8 border-t border-slate-800 pt-12 sm:pt-16">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="space-y-3">
-              <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
                 Portfolio
               </p>
               <h2 className="text-2xl font-bold text-white sm:text-3xl">Projets en vedette</h2>
@@ -745,7 +745,7 @@ export default function HomePage() {
 
             <Link
               to="/projets"
-              className="inline-flex items-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-rose-400 hover:text-white"
+              className="inline-flex w-full items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-rose-400 hover:text-white sm:w-auto"
             >
               Voir tous les projets
             </Link>
@@ -761,7 +761,7 @@ export default function HomePage() {
               ))}
             </div>
           ) : featuredProjects.length === 0 ? (
-            <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-10 text-center">
+            <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-6 text-center sm:p-10">
               <p className="text-sm text-slate-400">
                 Aucun projet en vedette pour le moment. Ajoutez-en un depuis l'espace de gestion.
               </p>
@@ -777,10 +777,10 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section id="contact" className="border-t border-slate-800 pt-16">
+        <section id="contact" className="border-t border-slate-800 pt-12 sm:pt-16">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-4">
-              <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
                 Contact
               </p>
               <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -794,13 +794,13 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4 lg:justify-end">
               <a
                 href="mailto:seydinalimamoulayeyade@gmail.com"
-                className="inline-flex w-full items-center justify-center rounded-lg bg-rose-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 sm:w-auto sm:px-6"
               >
                 Envoyer un email
               </a>
               <Link
                 to="/projets"
-                className="inline-flex w-full items-center justify-center rounded-lg border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-rose-400 hover:text-white sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-rose-400 hover:text-white sm:w-auto sm:px-6"
               >
                 Explorer les projets
               </Link>
