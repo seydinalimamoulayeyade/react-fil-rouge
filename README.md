@@ -271,6 +271,19 @@ Ce projet évolue module par module tout au long de la formation :
 
 ---
 
+## Preuves DevOps ajoutées
+
+Le dépôt contient maintenant des artefacts directement vérifiables pour soutenir le portfolio :
+
+- `Jenkinsfile` — pipeline CI/CD : lint, build, SonarQube, Trivy, build Docker et publication Docker Hub.
+- `sonar-project.properties` — configuration d'analyse qualité.
+- `trivy.yaml` — politique de scan sécurité pour le code et les images.
+- `docker-compose.monitoring.yml` — stack Prometheus/Grafana/cAdvisor.
+- `infra/terraform/aws/` — socle Terraform AWS : ECR, CloudWatch Logs, VPC et sous-réseaux.
+- `frontend/public/cv-seydina-yade.html` — CV web imprimable.
+
+---
+
 ## Auteur
 
 **Seydina Lima Mamoulaye Yade**

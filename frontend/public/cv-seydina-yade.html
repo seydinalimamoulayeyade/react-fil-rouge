@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Seydina Lima Mamoulaye Yade</title>
+    <style>
+      :root {
+        color: #0f172a;
+        background: #f8fafc;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 32px;
+      }
+
+      main {
+        max-width: 920px;
+        margin: 0 auto;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+      }
+
+      header {
+        display: grid;
+        gap: 16px;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 24px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1;
+      }
+
+      h2 {
+        margin-top: 32px;
+        color: #0f766e;
+        font-size: 0.82rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h3 {
+        margin-top: 16px;
+        font-size: 1.05rem;
+      }
+
+      p,
+      li {
+        color: #475569;
+        line-height: 1.7;
+      }
+
+      a {
+        color: #be123c;
+        text-decoration: none;
+      }
+
+      ul {
+        margin: 12px 0 0;
+        padding-left: 20px;
+      }
+
+      .role {
+        color: #be123c;
+        font-weight: 700;
+      }
+
+      .links,
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: 8px 10px;
+        color: #334155;
+        font-size: 0.88rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @media (max-width: 720px) {
+        body {
+          padding: 12px;
+        }
+
+        main {
+          padding: 24px;
+          border-radius: 12px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media print {
+        body {
+          padding: 0;
+          background: #ffffff;
+        }
+
+        main {
+          border: 0;
+          box-shadow: none;
+          max-width: none;
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="role">Développeur Cloud AWS & DevOps</p>
+        <h1>Seydina Lima Mamoulaye Yade</h1>
+        <p>
+          Profil orienté delivery : applications MERN/Laravel, conteneurisation
+          Docker, pipelines Jenkins, sécurité applicative, monitoring et socle
+          AWS.
+        </p>
+        <div class="links">
+          <a class="pill" href="mailto:seydinalimamoulayeyade@gmail.com">Email</a>
+          <a class="pill" href="https://github.com/seydinalimamoulayeyade">GitHub</a>
+          <a class="pill" href="https://hub.docker.com/u/lims4">Docker Hub</a>
+        </div>
+      </header>
+
+      <section>
+        <h2>Compétences clés</h2>
+        <div class="tags">
+          <span class="pill">AWS</span>
+          <span class="pill">Docker</span>
+          <span class="pill">Jenkins</span>
+          <span class="pill">Kubernetes</span>
+          <span class="pill">Terraform</span>
+          <span class="pill">SonarQube</span>
+          <span class="pill">Trivy</span>
+          <span class="pill">Prometheus/Grafana</span>
+          <span class="pill">MERN stack</span>
+          <span class="pill">Laravel</span>
+          <span class="pill">Tailwind CSS</span>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div>
+          <h2>Projet principal</h2>
+          <h3>devops-portfolio-mern</h3>
+          <p>
+            Application fullstack de gestion de portfolio technique :
+            React/Vite, Node.js/Express, MongoDB, JWT, upload d'images,
+            Docker Compose et images Docker Hub.
+          </p>
+        </div>
+
+        <div>
+          <h2>Formation</h2>
+          <h3>Cloud AWS & DevOps - Orange Digital Center</h3>
+          <p>
+            Parcours centré sur Docker, CI/CD, Kubernetes, Terraform,
+            monitoring, sécurité et déploiement cloud.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Preuves techniques</h2>
+        <ul>
+          <li>Images Docker frontend/backend publiées sur Docker Hub.</li>
+          <li>Pipeline Jenkins structuré pour lint, build, qualité, scan et publication.</li>
+          <li>Configuration SonarQube et politique de scan Trivy.</li>
+          <li>Base Terraform AWS et stack monitoring Prometheus/Grafana.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

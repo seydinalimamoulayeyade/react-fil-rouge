@@ -1,5 +1,3 @@
-version: "3.9"
-
 networks:
   mern-network:
     driver: bridge # réseau privé isolé — les 3 services se voient par leur nom
