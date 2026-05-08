@@ -31,6 +31,76 @@ const deliveryItems = [
   ["Run", "Déployer sur AWS et observer avec Prometheus/Grafana"],
 ];
 
+const profileLinks = [
+  ["GitHub", "https://github.com/seydinalimamoulayeyade", "Code source"],
+  ["Docker Hub", "https://hub.docker.com/u/lims4", "Images publiées"],
+  ["CV", "/cv-seydina-yade.html", "Version web"],
+];
+
+const proofItems = [
+  {
+    title: "Images Docker publiées",
+    label: "Docker Hub",
+    icon: "docker",
+    text: "Frontend et backend packagés en images séparées, avec build multi-stage côté React/Nginx.",
+    meta: "lims4/devops-portfolio-mern-*",
+  },
+  {
+    title: "Pipeline CI/CD documenté",
+    label: "Jenkins",
+    icon: "jenkins",
+    text: "Un Jenkinsfile formalise lint, build, analyse qualité, scans Trivy et publication d'images.",
+    meta: "Jenkinsfile",
+  },
+  {
+    title: "Qualité et sécurité",
+    label: "SonarQube + Trivy",
+    icon: "shield",
+    text: "Le projet expose une configuration SonarQube et une politique de scan Trivy pour rendre les contrôles visibles.",
+    meta: "sonar-project.properties / trivy.yaml",
+  },
+  {
+    title: "IaC et observabilité",
+    label: "Terraform + Prometheus",
+    icon: "terraform",
+    text: "Une base Terraform AWS et un monitoring Prometheus/Grafana donnent un chemin clair vers la production.",
+    meta: "infra/ + monitoring/",
+  },
+];
+
+const caseStudies = [
+  {
+    title: "Portfolio MERN DevOps",
+    image: "/images/portfolio-devops.jpg",
+    problem: "Présenter un profil Cloud & DevOps avec une application réelle plutôt qu'une simple page statique.",
+    solution: "React/Vite, API Express, MongoDB, authentification JWT, upload d'images et dashboard projet.",
+    impact: "Une vitrine qui démontre à la fois frontend, backend, Docker et culture livraison.",
+    tags: ["MERN", "Docker", "JWT"],
+  },
+  {
+    title: "Pipeline de livraison",
+    image: "/images/pipeline-cicd.jpg",
+    problem: "Rendre la qualité, la sécurité et la publication plus lisibles dans le cycle projet.",
+    solution: "Jenkinsfile, SonarQube, Trivy, build Docker et push d'images avec étapes isolées.",
+    impact: "Le recruteur voit le chemin du code vers l'image livrable, pas seulement une liste d'outils.",
+    tags: ["Jenkins", "SonarQube", "Trivy"],
+  },
+  {
+    title: "Socle cloud AWS",
+    image: "/images/dashboard-monitoring.jpg",
+    problem: "Préparer l'application à un déploiement cloud observable et maintenable.",
+    solution: "Base Terraform AWS, séparation des services, healthchecks Docker et stack Prometheus/Grafana.",
+    impact: "Une trajectoire claire vers AWS avec réseau, images, logs et métriques.",
+    tags: ["AWS", "Terraform", "Grafana"],
+  },
+];
+
+const experienceItems = [
+  ["Formation", "Cloud AWS & DevOps - Orange Digital Center", "Docker, CI/CD, Kubernetes, Terraform, monitoring et sécurité applicative."],
+  ["Projet fil rouge", "Portfolio MERN containerisé", "Application fullstack utilisée comme support concret pour chaque couche DevOps."],
+  ["Orientation", "DevOps orienté delivery", "Automatiser, sécuriser, observer et documenter le chemin vers la production."],
+];
+
 const toolGroups = [
   {
     title: "DevOps",
@@ -555,6 +625,25 @@ export default function HomePage() {
                 </a>
               </div>
 
+              <div
+                className="motion-fade-up flex flex-wrap gap-2"
+                style={{ "--motion-delay": "310ms" }}
+              >
+                {profileLinks.map(([label, href, detail]) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-slate-950/55 px-3 py-2 text-xs font-medium text-slate-300 transition-colors hover:border-cyan-300/40 hover:text-white"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
+                    {label}
+                    <span className="hidden text-slate-500 sm:inline">{detail}</span>
+                  </a>
+                ))}
+              </div>
+
               <div className="grid gap-3 border-t border-white/10 pt-5 sm:grid-cols-3 sm:gap-4 sm:pt-6">
                 {stackItems.map(([title, text], index) => (
                   <div
@@ -626,6 +715,63 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
+        <section className="space-y-6 border-t border-slate-800 pt-12 sm:pt-16">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
+                Preuves techniques
+              </p>
+              <h2 className="text-2xl font-bold text-white sm:text-3xl">
+                Des éléments vérifiables, pas seulement des mots-clés.
+              </h2>
+              <p className="text-sm leading-7 text-slate-400">
+                Le portfolio est accompagné de fichiers DevOps concrets pour montrer comment le projet peut être construit, scanné, livré et observé.
+              </p>
+            </div>
+
+            <a
+              href="https://github.com/seydinalimamoulayeyade/devops-portfolio-mern"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex w-full items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-300 hover:text-white sm:w-auto"
+            >
+              Voir le dépôt
+            </a>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {proofItems.map((item, index) => (
+              <article
+                key={item.title}
+                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 hover:border-emerald-300/35 sm:p-5"
+                style={{ "--motion-delay": `${index * 80}ms` }}
+              >
+                <div className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-cyan-300/20 bg-cyan-300/10 text-cyan-200">
+                    <ToolLogo icon={item.icon} />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-300">
+                      {item.label}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-7 text-slate-400">
+                      {item.text}
+                    </p>
+                    <p className="mt-4 break-words font-mono text-xs text-slate-500">
+                      {item.meta}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </RevealSection>
+
+      <RevealSection>
         <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-4">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
@@ -648,6 +794,71 @@ export default function HomePage() {
               >
                 {item}
               </div>
+            ))}
+          </div>
+        </section>
+      </RevealSection>
+
+      <RevealSection>
+        <section className="space-y-8 border-t border-slate-800 pt-12 sm:pt-16">
+          <div className="max-w-2xl space-y-3">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
+              Cas projets
+            </p>
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+              Chaque projet doit raconter un problème, une solution et un impact.
+            </h2>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-3">
+            {caseStudies.map((item, index) => (
+              <article
+                key={item.title}
+                className="motion-hover-lift motion-fade-up group overflow-hidden rounded-lg border border-slate-800 bg-slate-900/80 hover:border-rose-400/40"
+                style={{ "--motion-delay": `${index * 90}ms` }}
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                  <img
+                    src={item.image}
+                    alt=""
+                    className="h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                </div>
+
+                <div className="space-y-5 p-4 sm:p-5">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-lg border border-slate-800 bg-slate-950/70 px-2.5 py-1 text-xs text-cyan-200"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {[
+                    ["Problème", item.problem],
+                    ["Solution", item.solution],
+                    ["Impact", item.impact],
+                  ].map(([label, text]) => (
+                    <div key={label} className="border-t border-slate-800 pt-4">
+                      <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500">
+                        {label}
+                      </p>
+                      <p className="mt-2 text-sm leading-7 text-slate-400">
+                        {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -700,6 +911,47 @@ export default function HomePage() {
             <p>
               Mon objectif est de produire des interfaces élégantes, des API robustes et des solutions prêtes à évoluer sur AWS avec une culture DevOps solide.
             </p>
+          </div>
+        </section>
+      </RevealSection>
+
+      <RevealSection>
+        <section className="grid gap-8 border-t border-slate-800 pt-12 sm:pt-16 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div className="space-y-4">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-cyan-300 sm:text-sm sm:tracking-[0.3em]">
+              Parcours
+            </p>
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">
+              Une progression centrée sur la livraison cloud.
+            </h2>
+            <p className="text-sm leading-7 text-slate-400">
+              Cette section donne un repère rapide à un recruteur : formation, projet fil rouge et orientation technique.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {experienceItems.map(([type, title, text], index) => (
+              <article
+                key={title}
+                className="motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 sm:p-5"
+                style={{ "--motion-delay": `${index * 90}ms` }}
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300">
+                      {type}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold text-white">
+                      {title}
+                    </h3>
+                  </div>
+                  <span className="inline-flex w-fit rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">
+                    En cours
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-7 text-slate-400">{text}</p>
+              </article>
+            ))}
           </div>
         </section>
       </RevealSection>
@@ -804,6 +1056,14 @@ export default function HomePage() {
               >
                 Explorer les projets
               </Link>
+              <a
+                href="/cv-seydina-yade.html"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center rounded-lg border border-cyan-300/30 px-5 py-3 text-sm font-medium text-cyan-200 transition-colors hover:border-cyan-300 hover:text-white sm:w-auto sm:px-6"
+              >
+                Voir le CV
+              </a>
             </div>
           </div>
         </section>
