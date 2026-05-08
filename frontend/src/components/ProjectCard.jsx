@@ -24,6 +24,9 @@ export default function ProjectCard({ project, onDelete }) {
         )}
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
+        <div className="absolute left-4 top-4 rounded-lg border border-cyan-300/20 bg-slate-950/70 px-3 py-1.5 text-xs font-medium text-cyan-200 backdrop-blur">
+          Cloud-ready
+        </div>
       </div>
 
       <div className="space-y-4 p-5">
@@ -38,6 +41,17 @@ export default function ProjectCard({ project, onDelete }) {
           <p className="line-clamp-3 text-sm leading-6 text-slate-400">
             {project.description || "Aucune description disponible."}
           </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {["MERN", "Docker", "AWS"].map((item) => (
+            <span
+              key={item}
+              className="rounded-lg border border-slate-800 bg-slate-950/70 px-2.5 py-1 text-xs text-slate-400"
+            >
+              {item}
+            </span>
+          ))}
         </div>
 
         <div className="flex items-center justify-between gap-3 pt-2">
@@ -59,7 +73,7 @@ export default function ProjectCard({ project, onDelete }) {
 
               <button
                 type="button"
-                onClick={() => onDelete(projectId)}
+                onClick={() => onDelete(project)}
                 className="inline-flex items-center rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white transition-all hover:bg-red-600"
               >
                 Supprimer

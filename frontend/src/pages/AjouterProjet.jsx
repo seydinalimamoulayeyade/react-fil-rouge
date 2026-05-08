@@ -14,6 +14,12 @@ const initialState = {
   details: "",
 };
 
+const publishingSteps = [
+  ["Stack", "MERN, Laravel ou Tailwind"],
+  ["DevOps", "Docker, Jenkins et scans qualité"],
+  ["Cloud", "AWS, monitoring et contexte de livraison"],
+];
+
 export default function AjouterProjet() {
   const [form, setForm] = useState(initialState);
   const [imageFile, setImageFile] = useState(null);
@@ -126,120 +132,152 @@ export default function AjouterProjet() {
   }
 
   return (
-    <section className="mx-auto max-w-2xl space-y-6">
+    <section className="mx-auto max-w-5xl space-y-6">
       <div className="motion-fade-up">
         <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
-          {isEditing ? "Edition" : "Nouveau projet"}
+          {isEditing ? "Édition" : "Nouveau projet"}
         </p>
-        <h1 className="mt-2 text-3xl font-bold text-white">
-          {isEditing ? "Modifier un projet" : "Ajouter un projet"}
+        <h1 className="mt-2 text-balance text-3xl font-bold text-white">
+          {isEditing ? "Modifier un projet" : "Ajouter un projet AWS-ready"}
         </h1>
-        <p className="mt-2 text-slate-400">
+        <p className="mt-2 max-w-2xl text-slate-400">
           {isEditing
-            ? "Mettez à jour les informations du projet. Vous pouvez conserver l'image actuelle ou en choisir une nouvelle."
-            : "Remplissez le formulaire et choisissez une image pour créer un nouveau projet."}
+            ? "Mettez à jour les informations du projet, son image et son angle technique."
+            : "Renseignez un livrable clair, avec assez de contexte pour comprendre sa valeur produit, technique, DevOps et cloud AWS."}
         </p>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="motion-fade-up space-y-5 rounded-lg border border-slate-800 bg-slate-900/80 p-6"
-        style={{ "--motion-delay": "120ms" }}
-      >
-        <div>
-          <label className="mb-2 block text-sm text-slate-300">Libellé</label>
-          <input
-            type="text"
-            name="libelle"
-            value={form.libelle}
-            onChange={handleChange}
-            required
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-rose-400"
-          />
-        </div>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <form
+          onSubmit={handleSubmit}
+          className="glass-panel motion-fade-up space-y-5 rounded-lg p-6"
+          style={{ "--motion-delay": "120ms" }}
+        >
+          <div>
+            <label className="mb-2 block text-sm text-slate-300">Libellé</label>
+            <input
+              type="text"
+              name="libelle"
+              value={form.libelle}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-cyan-300"
+            />
+          </div>
 
-        <div>
-          <label className="mb-2 block text-sm text-slate-300">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            rows="4"
-            required
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-rose-400"
-          />
-        </div>
+          <div>
+            <label className="mb-2 block text-sm text-slate-300">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows="4"
+              required
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-cyan-300"
+            />
+          </div>
 
-        <div>
-          <label className="mb-2 block text-sm text-slate-300">
-            Image du projet
-          </label>
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="w-full rounded-lg border border-dashed border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
-          />
-          <p className="mt-2 text-xs text-slate-500">
-            Formats acceptés : JPG, PNG, WEBP ou GIF. Taille maximale : 5 Mo.
-          </p>
+          <div>
+            <label className="mb-2 block text-sm text-slate-300">
+              Image du projet
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full rounded-lg border border-dashed border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
+            />
+            <p className="mt-2 text-xs text-slate-500">
+              Formats acceptés : JPG, PNG, WEBP ou GIF. Taille maximale : 5 Mo.
+            </p>
 
-          {previewSrc ? (
-            <div className="mt-4 overflow-hidden rounded-lg border border-slate-800 bg-slate-950">
-              <img
-                src={previewSrc}
-                alt="Aperçu du projet"
-                className="h-56 w-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
+            {previewSrc ? (
+              <div className="mt-4 overflow-hidden rounded-lg border border-slate-800 bg-slate-950">
+                <img
+                  src={previewSrc}
+                  alt="Aperçu du projet"
+                  className="h-64 w-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="mt-4 flex h-44 items-center justify-center rounded-lg border border-dashed border-slate-800 bg-slate-950 text-sm text-slate-500">
+                Aucun aperçu disponible
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm text-slate-300">Détails</label>
+            <textarea
+              name="details"
+              value={form.details}
+              onChange={handleChange}
+              rows="5"
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-cyan-300"
+            />
+          </div>
+
+          {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="submit"
+              disabled={saving}
+              className="inline-flex rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 disabled:opacity-50"
+            >
+              {saving
+                ? "Enregistrement..."
+                : isEditing
+                  ? "Enregistrer les modifications"
+                  : "Ajouter le projet"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/projets")}
+              className="inline-flex rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-slate-500 hover:text-white"
+            >
+              Annuler
+            </button>
+          </div>
+        </form>
+
+        <aside className="motion-fade-up space-y-4" style={{ "--motion-delay": "220ms" }}>
+          <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-5">
+            <p className="text-sm font-mono uppercase tracking-[0.24em] text-cyan-300">
+              Publication
+            </p>
+            <div className="mt-5 space-y-4">
+              {publishingSteps.map(([title, text], index) => (
+                <div key={title} className="flex gap-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-cyan-300/20 bg-cyan-300/10 text-xs font-semibold text-cyan-200">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-400">{text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ) : (
-            <div className="mt-4 flex h-40 items-center justify-center rounded-lg border border-dashed border-slate-800 bg-slate-950 text-sm text-slate-500">
-              Aucun aperçu disponible
-            </div>
-          )}
-        </div>
+          </div>
 
-        <div>
-          <label className="mb-2 block text-sm text-slate-300">Détails</label>
-          <textarea
-            name="details"
-            value={form.details}
-            onChange={handleChange}
-            rows="5"
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-rose-400"
-          />
-        </div>
-
-        {error ? <p className="text-sm text-rose-300">{error}</p> : null}
-
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="submit"
-            disabled={saving}
-            className="inline-flex rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600 disabled:opacity-50"
-          >
-            {saving
-              ? "Enregistrement..."
-              : isEditing
-                ? "Enregistrer les modifications"
-                : "Ajouter le projet"}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => navigate("/projets")}
-            className="inline-flex rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-slate-500 hover:text-white"
-          >
-            Annuler
-          </button>
-        </div>
-      </form>
+          <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/10 p-5">
+            <p className="text-sm font-semibold text-emerald-200">
+              Conseil DevOps
+            </p>
+            <p className="mt-2 text-sm leading-6 text-emerald-100/75">
+              Ajoutez dans les détails les choix AWS, le pipeline Jenkins, la conteneurisation Docker et les scans SonarQube/Trivy.
+            </p>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }

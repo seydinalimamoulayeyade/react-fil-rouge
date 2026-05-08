@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getImageUrl, getProjectById } from "../services/projetService";
 
+const deliveryChecks = [
+  ["Build", "Pipeline Jenkins"],
+  ["Scan", "SonarQube/Trivy"],
+  ["Cloud", "AWS ciblé"],
+];
+
 export default function DetaillerProjet() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -68,47 +74,85 @@ export default function DetaillerProjet() {
         &larr; Retour à la liste
       </Link>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div className="motion-fade-up overflow-hidden rounded-lg border border-slate-800 bg-slate-900/80">
-          {imageSrc ? (
-            <img
-              src={imageSrc}
-              alt={project.libelle}
-              className="h-full min-h-80 w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-80 items-center justify-center text-sm text-slate-500">
-              Aucune image disponible
+      <div className="glass-panel motion-fade-up overflow-hidden rounded-lg">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="relative min-h-[360px] bg-slate-900">
+            {imageSrc ? (
+              <img
+                src={imageSrc}
+                alt={project.libelle}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full min-h-[360px] items-center justify-center text-sm text-slate-500">
+                Aucune image disponible
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-300">
+                Project release
+              </p>
+              <h1 className="mt-3 text-balance text-3xl font-bold text-white sm:text-4xl">
+                {project.libelle}
+              </h1>
             </div>
-          )}
+          </div>
+
+          <div className="space-y-5 p-6">
+            <div>
+              <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
+                Delivery status
+              </p>
+              <div className="mt-4 space-y-3">
+                {deliveryChecks.map(([title, label], index) => (
+                  <div
+                    key={title}
+                    className="motion-fade-up flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3"
+                    style={{ "--motion-delay": `${index * 90}ms` }}
+                  >
+                    <div>
+                      <p className="text-sm font-semibold text-white">{title}</p>
+                      <p className="mt-1 text-xs text-slate-500">{label}</p>
+                    </div>
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.5)]" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-5">
+              <h2 className="text-lg font-semibold text-white">Description</h2>
+              <p className="mt-3 leading-7 text-slate-400">
+                {project.description || "Aucune description disponible."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr]">
+        <div className="motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-5">
+          <h2 className="text-lg font-semibold text-white">
+            Informations complémentaires
+          </h2>
+          <p className="mt-3 leading-7 text-slate-400">
+            {project.details || "Aucun détail supplémentaire disponible."}
+          </p>
         </div>
 
-        <div className="motion-fade-up space-y-6" style={{ "--motion-delay": "120ms" }}>
-          <div>
-            <p className="text-sm font-mono uppercase tracking-[0.3em] text-rose-300">
-              Projet
-            </p>
-            <h1 className="mt-2 text-3xl font-bold text-white">
-              {project.libelle}
-            </h1>
-          </div>
-
-          <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-5">
-            <h2 className="mb-3 text-lg font-semibold text-white">
-              Description
-            </h2>
-            <p className="leading-7 text-slate-400">
-              {project.description || "Aucune description disponible."}
-            </p>
-          </div>
-
-          <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-5">
-            <h2 className="mb-3 text-lg font-semibold text-white">
-              Informations complémentaires
-            </h2>
-            <p className="leading-7 text-slate-400">
-              {project.details || "Aucun détail supplémentaire disponible."}
-            </p>
+        <div className="motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-5" style={{ "--motion-delay": "120ms" }}>
+          <h2 className="text-lg font-semibold text-white">Vue technique</h2>
+          <div className="mt-4 space-y-3 text-sm">
+            {["MERN stack", "Laravel/Tailwind", "Docker/Kubernetes", "AWS + monitoring"].map((item) => (
+              <div
+                key={item}
+                className="flex items-center justify-between border-b border-slate-800 pb-3 last:border-0 last:pb-0"
+              >
+                <span className="text-slate-400">{item}</span>
+                <span className="text-cyan-300">ready</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
