@@ -17,18 +17,18 @@ const skillItems = [
 ];
 
 const approachItems = [
-  "Pipelines Jenkins pour automatiser build, tests et livraison",
-  "Conteneurisation Docker et orchestration Kubernetes",
-  "Infrastructure AWS avec une approche cloud production",
-  "Qualité, sécurité et observabilité avec SonarQube, Trivy, Prometheus/Grafana",
+  "Dockerisation actuelle du portfolio MERN avec services séparés",
+  "Jenkins, SonarQube et Trivy comme compétences CI/CD à intégrer étape par étape",
+  "AWS comme cible cloud pour les futurs déploiements",
+  "Kubernetes, Terraform et Prometheus/Grafana comme prochaines couches DevOps",
 ];
 
-const pipelineSteps = ["Code", "Jenkins", "Scan", "Deploy"];
+const pipelineSteps = ["Code", "Docker", "Compose", "Run"];
 
 const deliveryItems = [
-  ["Build", "Compiler, tester et analyser avec Jenkins et SonarQube"],
-  ["Secure", "Scanner les images et dépendances avec Trivy"],
-  ["Run", "Déployer sur AWS et observer avec Prometheus/Grafana"],
+  ["Aujourd'hui", "Application MERN dockerisée avec frontend, backend et MongoDB"],
+  ["Ensuite", "Pipeline Jenkins, qualité SonarQube et scans Trivy"],
+  ["Après", "AWS, Kubernetes, Terraform et monitoring Prometheus/Grafana"],
 ];
 
 const profileLinks = [
@@ -37,68 +37,10 @@ const profileLinks = [
   ["CV", "/cv-seydina-yade.html", "Version web"],
 ];
 
-const proofItems = [
-  {
-    title: "Images Docker publiées",
-    label: "Docker Hub",
-    icon: "docker",
-    text: "Frontend et backend packagés en images séparées, avec build multi-stage côté React/Nginx.",
-    meta: "lims4/devops-portfolio-mern-*",
-  },
-  {
-    title: "Pipeline CI/CD documenté",
-    label: "Jenkins",
-    icon: "jenkins",
-    text: "Un Jenkinsfile formalise lint, build, analyse qualité, scans Trivy et publication d'images.",
-    meta: "Jenkinsfile",
-  },
-  {
-    title: "Qualité et sécurité",
-    label: "SonarQube + Trivy",
-    icon: "shield",
-    text: "Le projet expose une configuration SonarQube et une politique de scan Trivy pour rendre les contrôles visibles.",
-    meta: "sonar-project.properties / trivy.yaml",
-  },
-  {
-    title: "IaC et observabilité",
-    label: "Terraform + Prometheus",
-    icon: "terraform",
-    text: "Une base Terraform AWS et un monitoring Prometheus/Grafana donnent un chemin clair vers la production.",
-    meta: "infra/ + monitoring/",
-  },
-];
-
-const caseStudies = [
-  {
-    title: "Portfolio MERN DevOps",
-    image: "/images/portfolio-devops.jpg",
-    problem: "Présenter un profil Cloud & DevOps avec une application réelle plutôt qu'une simple page statique.",
-    solution: "React/Vite, API Express, MongoDB, authentification JWT, upload d'images et dashboard projet.",
-    impact: "Une vitrine qui démontre à la fois frontend, backend, Docker et culture livraison.",
-    tags: ["MERN", "Docker", "JWT"],
-  },
-  {
-    title: "Pipeline de livraison",
-    image: "/images/pipeline-cicd.jpg",
-    problem: "Rendre la qualité, la sécurité et la publication plus lisibles dans le cycle projet.",
-    solution: "Jenkinsfile, SonarQube, Trivy, build Docker et push d'images avec étapes isolées.",
-    impact: "Le recruteur voit le chemin du code vers l'image livrable, pas seulement une liste d'outils.",
-    tags: ["Jenkins", "SonarQube", "Trivy"],
-  },
-  {
-    title: "Socle cloud AWS",
-    image: "/images/dashboard-monitoring.jpg",
-    problem: "Préparer l'application à un déploiement cloud observable et maintenable.",
-    solution: "Base Terraform AWS, séparation des services, healthchecks Docker et stack Prometheus/Grafana.",
-    impact: "Une trajectoire claire vers AWS avec réseau, images, logs et métriques.",
-    tags: ["AWS", "Terraform", "Grafana"],
-  },
-];
-
 const experienceItems = [
-  ["Formation", "Cloud AWS & DevOps - Orange Digital Center", "Docker, CI/CD, Kubernetes, Terraform, monitoring et sécurité applicative."],
-  ["Projet fil rouge", "Portfolio MERN containerisé", "Application fullstack utilisée comme support concret pour chaque couche DevOps."],
-  ["Orientation", "DevOps orienté delivery", "Automatiser, sécuriser, observer et documenter le chemin vers la production."],
+  ["Formation", "Cloud AWS & DevOps - Orange Digital Center", "Docker aujourd'hui, puis CI/CD, Kubernetes, Terraform, monitoring et sécurité applicative."],
+  ["Projet fil rouge", "Portfolio MERN containerisé", "Application fullstack utilisée comme support progressif pour les prochaines couches DevOps."],
+  ["Orientation", "DevOps orienté delivery", "Construire proprement, documenter les étapes et intégrer les outils sans brûler les phases."],
 ];
 
 const toolGroups = [
@@ -471,9 +413,9 @@ function CloudDevOpsMotionPanel() {
 
       <div className="grid grid-cols-3 gap-3 border-y border-white/10 py-4">
         {[
-          ["AWS", "cloud cible"],
-          ["Trivy", "scan"],
-          ["Jenkins", "pipeline"],
+          ["Docker", "socle"],
+          ["API", "Express"],
+          ["Mongo", "data"],
         ].map(([value, label], index) => (
           <div
             key={label}
@@ -488,7 +430,7 @@ function CloudDevOpsMotionPanel() {
 
       <div className="mt-5 space-y-3 font-mono text-xs text-slate-400">
         <div className="flex items-center justify-between">
-          <span>jenkins.pipeline</span>
+          <span>docker.compose</span>
           <span className="text-emerald-300">green</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-slate-800">
@@ -603,7 +545,7 @@ export default function HomePage() {
                   className="motion-fade-up max-w-2xl text-sm leading-7 text-slate-300 sm:text-lg sm:leading-8"
                   style={{ "--motion-delay": "180ms" }}
                 >
-                  Développeur DevOps orienté AWS, je construis des pipelines Jenkins, des déploiements Docker/Kubernetes et des applications MERN ou Laravel avec Tailwind.
+                  Développeur DevOps orienté AWS, je consolide aujourd'hui une base MERN dockerisée, puis j'intègre progressivement Jenkins, Kubernetes, Terraform et les outils de qualité.
                 </p>
               </div>
 
@@ -715,63 +657,6 @@ export default function HomePage() {
       </RevealSection>
 
       <RevealSection>
-        <section className="space-y-6 border-t border-slate-800 pt-12 sm:pt-16">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl space-y-3">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-300 sm:text-sm sm:tracking-[0.3em]">
-                Preuves techniques
-              </p>
-              <h2 className="text-2xl font-bold text-white sm:text-3xl">
-                Des éléments vérifiables, pas seulement des mots-clés.
-              </h2>
-              <p className="text-sm leading-7 text-slate-400">
-                Le portfolio est accompagné de fichiers DevOps concrets pour montrer comment le projet peut être construit, scanné, livré et observé.
-              </p>
-            </div>
-
-            <a
-              href="https://github.com/seydinalimamoulayeyade/devops-portfolio-mern"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex w-full items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-300 hover:text-white sm:w-auto"
-            >
-              Voir le dépôt
-            </a>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {proofItems.map((item, index) => (
-              <article
-                key={item.title}
-                className="motion-hover-lift motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 hover:border-emerald-300/35 sm:p-5"
-                style={{ "--motion-delay": `${index * 80}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-cyan-300/20 bg-cyan-300/10 text-cyan-200">
-                    <ToolLogo icon={item.icon} />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-300">
-                      {item.label}
-                    </p>
-                    <h3 className="mt-2 text-lg font-semibold text-white">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-400">
-                      {item.text}
-                    </p>
-                    <p className="mt-4 break-words font-mono text-xs text-slate-500">
-                      {item.meta}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      </RevealSection>
-
-      <RevealSection>
         <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-4">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
@@ -794,71 +679,6 @@ export default function HomePage() {
               >
                 {item}
               </div>
-            ))}
-          </div>
-        </section>
-      </RevealSection>
-
-      <RevealSection>
-        <section className="space-y-8 border-t border-slate-800 pt-12 sm:pt-16">
-          <div className="max-w-2xl space-y-3">
-            <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
-              Cas projets
-            </p>
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
-              Chaque projet doit raconter un problème, une solution et un impact.
-            </h2>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-3">
-            {caseStudies.map((item, index) => (
-              <article
-                key={item.title}
-                className="motion-hover-lift motion-fade-up group overflow-hidden rounded-lg border border-slate-800 bg-slate-900/80 hover:border-rose-400/40"
-                style={{ "--motion-delay": `${index * 90}ms` }}
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
-                  <img
-                    src={item.image}
-                    alt=""
-                    className="h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                </div>
-
-                <div className="space-y-5 p-4 sm:p-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">
-                      {item.title}
-                    </h3>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-lg border border-slate-800 bg-slate-950/70 px-2.5 py-1 text-xs text-cyan-200"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {[
-                    ["Problème", item.problem],
-                    ["Solution", item.solution],
-                    ["Impact", item.impact],
-                  ].map(([label, text]) => (
-                    <div key={label} className="border-t border-slate-800 pt-4">
-                      <p className="text-xs font-mono uppercase tracking-[0.2em] text-slate-500">
-                        {label}
-                      </p>
-                      <p className="mt-2 text-sm leading-7 text-slate-400">
-                        {text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </article>
             ))}
           </div>
         </section>
@@ -1039,7 +859,7 @@ export default function HomePage() {
                 Besoin d'un développeur Cloud & DevOps pour un projet ?
               </h2>
               <p className="max-w-2xl text-sm leading-8 text-slate-400">
-                Je peux contribuer à une application MERN ou Laravel, à sa conteneurisation, à son pipeline Jenkins, à ses scans SonarQube/Trivy et à son déploiement AWS.
+                Je peux contribuer à une application MERN ou Laravel, renforcer sa conteneurisation Docker et préparer les prochaines étapes : Jenkins, SonarQube, Trivy, Kubernetes, Terraform et AWS.
               </p>
             </div>
 
