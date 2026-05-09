@@ -92,6 +92,7 @@ docker pull lims4/devops-portfolio-mern-backend:latest
 ```bash
 git clone https://github.com/seydinalimamoulayeyade/devops-portfolio-mern.git
 cd devops-portfolio-mern
+cp .env.example .env
 cp backend/.env.example backend/.env
 docker compose up --build
 ```
@@ -111,25 +112,26 @@ docker compose up --build
 Copie les fichiers d'exemple et renseigne les valeurs :
 
 ```bash
+cp .env.example .env
 cp backend/.env.example backend/.env
 ```
 
-**`backend/.env`**
-
-```env
-PORT=5000
-MONGO_URI=mongodb://mongo:27017/filrouge
-JWT_SECRET=change_this_secret
-```
-
-**`.env` (racine)**
+**`.env` (racine, Docker Compose)**
 
 ```env
 JWT_SECRET=change_this_secret
 VITE_API_URL=http://localhost:5000/api
 ```
 
-> En environnement Docker Compose, `mongo` est résolu par le DNS interne du réseau `mern-network` — ne pas remplacer par `localhost`.
+**`backend/.env` (developpement local hors Docker)**
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/filrouge
+JWT_SECRET=change_this_secret
+```
+
+> En environnement Docker Compose, `MONGO_URI` est injecté par `docker-compose.yml` avec `mongodb://mongo:27017/filrouge`. Le nom `mongo` est résolu par le DNS interne du réseau `mern-network`.
 
 ---
 
