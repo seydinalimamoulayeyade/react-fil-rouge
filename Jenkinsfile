@@ -191,7 +191,7 @@ EOF
                 fi
             '''
             emailext(
-                to: 'ton-email@gmail.com',
+                to: 'seydinalimamoulayeyade@gmail.com',
                 subject: "[Jenkins] ${currentBuild.result} — ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
                     <h2>Résultat : ${currentBuild.result}</h2>
