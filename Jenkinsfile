@@ -14,6 +14,7 @@ pipeline {
         DOCKERHUB_USER = "lims4"
         FRONTEND_IMAGE = "${DOCKERHUB_USER}/devops-portfolio-mern-frontend"
         BACKEND_IMAGE  = "${DOCKERHUB_USER}/devops-portfolio-mern-backend"
+        VITE_API_URL   = "http://localhost:5000/api"
     }
 
     stages {
@@ -48,6 +49,27 @@ pipeline {
                     docker --version
                     docker compose version
                 '''
+            }
+        }
+
+        stage('Prepare CI env') {
+            steps {
+                echo "Preparation du fichier .env pour Docker Compose..."
+                withCredentials([string(
+                    credentialsId: 'jwt-secret',
+                    variable: 'JWT_SECRET_VALUE'
+                )]) {
+                    sh '''
+                        set -eu
+
+                        cat > .env <<EOF
+JWT_SECRET=$JWT_SECRET_VALUE
+VITE_API_URL=$VITE_API_URL
+EOF
+
+                        chmod 600 .env
+                    '''
+                }
             }
         }
 
