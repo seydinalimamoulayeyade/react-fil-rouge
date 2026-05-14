@@ -2,12 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getImageUrl, getProjectById } from "../services/projetService";
 
-const deliveryChecks = [
-  ["Build", "Pipeline Jenkins"],
-  ["Scan", "SonarQube/Trivy"],
-  ["Cloud", "AWS ciblé"],
-];
-
 export default function DetaillerProjet() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -37,7 +31,7 @@ export default function DetaillerProjet() {
     return (
       <section className="mx-auto max-w-4xl space-y-6">
         <Link to="/projets" className="text-sm text-rose-300 hover:underline">
-          &larr; Retour à la liste
+          &larr; Retour a la liste
         </Link>
 
         <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-6">
@@ -51,7 +45,7 @@ export default function DetaillerProjet() {
     return (
       <section className="mx-auto max-w-4xl space-y-6">
         <Link to="/projets" className="text-sm text-rose-300 hover:underline">
-          &larr; Retour à la liste
+          &larr; Retour a la liste
         </Link>
 
         <div className="rounded-lg border border-red-800 bg-red-950/30 p-6">
@@ -64,6 +58,14 @@ export default function DetaillerProjet() {
   }
 
   const imageSrc = getImageUrl(project.image);
+  const technologies = Array.isArray(project.technologies)
+    ? project.technologies.filter(Boolean)
+    : [];
+  const infoItems = [
+    ["Statut", project.statut || "Non renseigne"],
+    ["Categorie", project.categorie || "Non renseignee"],
+    ["Technologies", technologies.length > 0 ? `${technologies.length}` : "0"],
+  ];
 
   return (
     <section className="mx-auto max-w-5xl space-y-8">
@@ -71,7 +73,7 @@ export default function DetaillerProjet() {
         to="/projets"
         className="inline-flex text-sm text-rose-300 hover:underline"
       >
-        &larr; Retour à la liste
+        &larr; Retour a la liste
       </Link>
 
       <div className="glass-panel motion-fade-up overflow-hidden rounded-lg">
@@ -102,20 +104,17 @@ export default function DetaillerProjet() {
           <div className="space-y-5 p-4 sm:p-6">
             <div>
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
-                Delivery status
+                Synthese
               </p>
               <div className="mt-4 space-y-3">
-                {deliveryChecks.map(([title, label], index) => (
+                {infoItems.map(([title, label], index) => (
                   <div
                     key={title}
                     className="motion-fade-up flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/60 px-4 py-3"
                     style={{ "--motion-delay": `${index * 90}ms` }}
                   >
-                    <div>
-                      <p className="text-sm font-semibold text-white">{title}</p>
-                      <p className="mt-1 text-xs text-slate-500">{label}</p>
-                    </div>
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.5)]" />
+                    <p className="text-sm font-semibold text-white">{title}</p>
+                    <span className="text-sm text-cyan-300">{label}</span>
                   </div>
                 ))}
               </div>
@@ -127,6 +126,30 @@ export default function DetaillerProjet() {
                 {project.description || "Aucune description disponible."}
               </p>
             </div>
+
+            <div className="flex flex-wrap gap-3">
+              {project.lienGithub ? (
+                <a
+                  href={project.lienGithub}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-300 hover:text-white"
+                >
+                  GitHub
+                </a>
+              ) : null}
+
+              {project.lienDemo ? (
+                <a
+                  href={project.lienDemo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex rounded-lg bg-rose-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-rose-600"
+                >
+                  Demo
+                </a>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
@@ -134,26 +157,31 @@ export default function DetaillerProjet() {
       <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr]">
         <div className="motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 sm:p-5">
           <h2 className="text-lg font-semibold text-white">
-            Informations complémentaires
+            Informations complementaires
           </h2>
           <p className="mt-3 leading-7 text-slate-400">
-            {project.details || "Aucun détail supplémentaire disponible."}
+            {project.details || "Aucun detail supplementaire disponible."}
           </p>
         </div>
 
         <div className="motion-fade-up rounded-lg border border-slate-800 bg-slate-900/80 p-4 sm:p-5" style={{ "--motion-delay": "120ms" }}>
           <h2 className="text-lg font-semibold text-white">Vue technique</h2>
-          <div className="mt-4 space-y-3 text-sm">
-            {["MERN stack", "Laravel/Tailwind", "Docker/Kubernetes", "AWS + monitoring"].map((item) => (
-              <div
-                key={item}
-                className="flex items-center justify-between border-b border-slate-800 pb-3 last:border-0 last:pb-0"
-              >
-                <span className="text-slate-400">{item}</span>
-                <span className="text-cyan-300">ready</span>
-              </div>
-            ))}
-          </div>
+          {technologies.length > 0 ? (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {technologies.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-2 text-sm text-slate-300"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm leading-7 text-slate-400">
+              Aucune technologie renseignee.
+            </p>
+          )}
         </div>
       </div>
     </section>

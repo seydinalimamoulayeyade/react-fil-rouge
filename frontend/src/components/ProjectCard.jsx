@@ -3,10 +3,14 @@ import { useAuth } from "../context/useAuth";
 import { getImageUrl } from "../services/projetService";
 
 export default function ProjectCard({ project, onDelete }) {
-  const { isAuthenticated } = useAuth();
+  const { isAdmin } = useAuth();
 
   const projectId = project._id || project.id;
   const imageSrc = getImageUrl(project.image);
+  const technologies = Array.isArray(project.technologies)
+    ? project.technologies.filter(Boolean).slice(0, 4)
+    : [];
+  const statusLabel = project.statut || "Projet";
 
   return (
     <article className="motion-hover-lift group overflow-hidden rounded-lg border border-slate-800 bg-slate-900/90 shadow-sm transition-all duration-300 hover:border-rose-400/70 hover:shadow-[0_0_0_1px_rgba(244,63,94,0.12)]">
@@ -25,7 +29,7 @@ export default function ProjectCard({ project, onDelete }) {
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
         <div className="absolute left-4 top-4 rounded-lg border border-cyan-300/20 bg-slate-950/70 px-3 py-1.5 text-xs font-medium text-cyan-200 backdrop-blur">
-          Cloud-ready
+          {statusLabel}
         </div>
       </div>
 
@@ -43,16 +47,18 @@ export default function ProjectCard({ project, onDelete }) {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {["MERN", "Docker", "AWS"].map((item) => (
-            <span
-              key={item}
-              className="rounded-lg border border-slate-800 bg-slate-950/70 px-2.5 py-1 text-xs text-slate-400"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
+        {technologies.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {technologies.map((item) => (
+              <span
+                key={item}
+                className="rounded-lg border border-slate-800 bg-slate-950/70 px-2.5 py-1 text-xs text-slate-400"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        ) : null}
 
         <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
           <Link
@@ -62,7 +68,7 @@ export default function ProjectCard({ project, onDelete }) {
             Voir le détail &rarr;
           </Link>
 
-          {isAuthenticated ? (
+          {isAdmin ? (
             <div className="grid grid-cols-2 gap-2 sm:flex">
               <Link
                 to={`/modifier/${projectId}`}

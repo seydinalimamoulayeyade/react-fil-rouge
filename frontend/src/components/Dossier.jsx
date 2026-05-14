@@ -77,7 +77,7 @@ function DeleteProjectDialog({ project, deleting, onCancel, onConfirm }) {
 }
 
 export default function Dossier() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
   const [projects, setProjects] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -135,9 +135,23 @@ export default function Dossier() {
 
     if (!value) return projects;
 
-    return projects.filter((project) =>
-      project.libelle.toLowerCase().includes(value),
-    );
+    return projects.filter((project) => {
+      const technologies = Array.isArray(project.technologies)
+        ? project.technologies.join(" ")
+        : "";
+
+      return [
+        project.libelle,
+        project.description,
+        project.categorie,
+        project.statut,
+        technologies,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(value);
+    });
   }, [projects, search]);
 
   return (
@@ -154,10 +168,14 @@ export default function Dossier() {
             <p className="text-sm leading-7 text-slate-400 sm:text-base">
               Retrouvez les réalisations, recherchez un projet et gérez les livrables depuis une interface React connectée à une API sécurisée, prête à être conteneurisée et monitorée.
             </p>
-            {isAuthenticated ? (
+            {isAdmin ? (
               <span className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/20 bg-cyan-300/10 px-3 py-2 text-xs font-medium text-cyan-200">
                 <span className="h-2 w-2 rounded-full bg-cyan-300" />
                 Console admin active
+              </span>
+            ) : isAuthenticated ? (
+              <span className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs font-medium text-slate-300">
+                Connecte sans droits admin
               </span>
             ) : null}
           </div>
@@ -207,21 +225,21 @@ export default function Dossier() {
               </svg>
             </div>
 
-            {isAuthenticated ? (
+            {isAdmin ? (
               <Link
                 to="/ajouter"
                 className="inline-flex items-center justify-center rounded-lg bg-rose-500 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-rose-600"
               >
                 Ajouter un projet
               </Link>
-            ) : (
+            ) : !isAuthenticated ? (
               <Link
                 to="/login"
                 className="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-300 hover:text-white"
               >
                 Se connecter pour publier
               </Link>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

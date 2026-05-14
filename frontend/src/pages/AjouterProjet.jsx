@@ -12,11 +12,16 @@ const initialState = {
   description: "",
   image: "",
   details: "",
+  technologies: "",
+  lienGithub: "",
+  lienDemo: "",
+  categorie: "",
+  statut: "En cours",
 };
 
 const publishingSteps = [
-  ["Stack", "MERN, Laravel ou Tailwind"],
-  ["DevOps", "Docker, Jenkins et scans qualité"],
+  ["Stack", "Technologies et categorie du projet"],
+  ["DevOps", "Docker, CI/CD et scans qualite"],
   ["Cloud", "AWS, monitoring et contexte de livraison"],
 ];
 
@@ -45,10 +50,17 @@ export default function AjouterProjet() {
           description: data.description || "",
           image: data.image || "",
           details: data.details || "",
+          technologies: Array.isArray(data.technologies)
+            ? data.technologies.join(", ")
+            : data.technologies || "",
+          lienGithub: data.lienGithub || "",
+          lienDemo: data.lienDemo || "",
+          categorie: data.categorie || "",
+          statut: data.statut || "En cours",
         });
       } catch (err) {
         console.error(err);
-        setError("Impossible de charger le projet à modifier.");
+        setError("Impossible de charger le projet a modifier.");
       } finally {
         setLoading(false);
       }
@@ -86,6 +98,11 @@ export default function AjouterProjet() {
     formData.append("libelle", form.libelle);
     formData.append("description", form.description);
     formData.append("details", form.details);
+    formData.append("technologies", form.technologies);
+    formData.append("lienGithub", form.lienGithub);
+    formData.append("lienDemo", form.lienDemo);
+    formData.append("categorie", form.categorie);
+    formData.append("statut", form.statut);
 
     if (imageFile) {
       formData.append("image", imageFile);
@@ -135,14 +152,14 @@ export default function AjouterProjet() {
     <section className="mx-auto max-w-5xl space-y-6">
       <div className="motion-fade-up">
         <p className="text-xs font-mono uppercase tracking-[0.2em] text-rose-300 sm:text-sm sm:tracking-[0.3em]">
-          {isEditing ? "Édition" : "Nouveau projet"}
+          {isEditing ? "Edition" : "Nouveau projet"}
         </p>
         <h1 className="mt-2 text-balance text-2xl font-bold leading-tight text-white sm:text-3xl">
           {isEditing ? "Modifier un projet" : "Ajouter un projet AWS-ready"}
         </h1>
         <p className="mt-2 max-w-2xl text-slate-400">
           {isEditing
-            ? "Mettez à jour les informations du projet, son image et son angle technique."
+            ? "Mettez a jour les informations du projet, son image et son angle technique."
             : "Renseignez un livrable clair, avec assez de contexte pour comprendre sa valeur produit, technique, DevOps et cloud AWS."}
         </p>
       </div>
@@ -154,7 +171,7 @@ export default function AjouterProjet() {
           style={{ "--motion-delay": "120ms" }}
         >
           <div>
-            <label className="mb-2 block text-sm text-slate-300">Libellé</label>
+            <label className="mb-2 block text-sm text-slate-300">Libelle</label>
             <input
               type="text"
               name="libelle"
@@ -179,6 +196,84 @@ export default function AjouterProjet() {
             />
           </div>
 
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm text-slate-300">
+                Categorie
+              </label>
+              <input
+                type="text"
+                name="categorie"
+                placeholder="MERN, Laravel, DevOps..."
+                value={form.categorie}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-cyan-300"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm text-slate-300">Statut</label>
+              <select
+                name="statut"
+                value={form.statut}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors focus:border-cyan-300"
+              >
+                <option value="En cours">En cours</option>
+                <option value="Termine">Termine</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Archive">Archive</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm text-slate-300">
+              Technologies
+            </label>
+            <input
+              type="text"
+              name="technologies"
+              placeholder="React, Node.js, Docker, AWS"
+              value={form.technologies}
+              onChange={handleChange}
+              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-cyan-300"
+            />
+            <p className="mt-2 text-xs text-slate-500">
+              Separez les technologies par des virgules.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-sm text-slate-300">
+                Lien GitHub
+              </label>
+              <input
+                type="url"
+                name="lienGithub"
+                placeholder="https://github.com/..."
+                value={form.lienGithub}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-cyan-300"
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm text-slate-300">
+                Lien demo
+              </label>
+              <input
+                type="url"
+                name="lienDemo"
+                placeholder="https://..."
+                value={form.lienDemo}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-cyan-300"
+              />
+            </div>
+          </div>
+
           <div>
             <label className="mb-2 block text-sm text-slate-300">
               Image du projet
@@ -191,14 +286,14 @@ export default function AjouterProjet() {
               className="w-full rounded-lg border border-dashed border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-rose-500 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-rose-600"
             />
             <p className="mt-2 text-xs text-slate-500">
-              Formats acceptés : JPG, PNG, WEBP ou GIF. Taille maximale : 5 Mo.
+              Formats acceptes : JPG, PNG, WEBP ou GIF. Taille maximale : 5 Mo.
             </p>
 
             {previewSrc ? (
               <div className="mt-4 overflow-hidden rounded-lg border border-slate-800 bg-slate-950">
                 <img
                   src={previewSrc}
-                  alt="Aperçu du projet"
+                  alt="Apercu du projet"
                   className="h-64 w-full object-cover"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
@@ -207,13 +302,13 @@ export default function AjouterProjet() {
               </div>
             ) : (
               <div className="mt-4 flex h-44 items-center justify-center rounded-lg border border-dashed border-slate-800 bg-slate-950 text-sm text-slate-500">
-                Aucun aperçu disponible
+                Aucun apercu disponible
               </div>
             )}
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-slate-300">Détails</label>
+            <label className="mb-2 block text-sm text-slate-300">Details</label>
             <textarea
               name="details"
               value={form.details}
@@ -273,7 +368,8 @@ export default function AjouterProjet() {
               Conseil DevOps
             </p>
             <p className="mt-2 text-sm leading-6 text-emerald-100/75">
-              Ajoutez dans les détails les choix AWS, le pipeline Jenkins, la conteneurisation Docker et les scans SonarQube/Trivy.
+              Ajoutez dans les details les choix AWS, le pipeline Jenkins, la
+              conteneurisation Docker et les scans SonarQube/Trivy.
             </p>
           </div>
         </aside>
