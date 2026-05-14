@@ -63,8 +63,15 @@ pipeline {
                         set -eu
 
                         cat > .env <<EOF
+COMPOSE_PROJECT_NAME=devops-portfolio-mern-ci
 JWT_SECRET=$JWT_SECRET_VALUE
 VITE_API_URL=$VITE_API_URL
+MONGO_CONTAINER_NAME=ci-mongo
+BACKEND_CONTAINER_NAME=ci-backend
+FRONTEND_CONTAINER_NAME=ci-frontend
+MONGO_PORT=27018
+BACKEND_PORT=5001
+FRONTEND_PORT=8081
 EOF
 
                         chmod 600 .env
@@ -148,12 +155,25 @@ EOF
         stage('Deploy') {
             steps {
                 echo "Deploiement en local..."
-                sh '''
-                    set -eu
-                    docker compose down
-                    docker compose up -d
-                    docker compose ps
-                '''
+                withCredentials([string(
+                    credentialsId: 'jwt-secret',
+                    variable: 'JWT_SECRET_VALUE'
+                )]) {
+                    sh '''
+                        set -eu
+
+                        docker compose --env-file .env down || true
+
+                        cat > .env.deploy <<EOF
+JWT_SECRET=$JWT_SECRET_VALUE
+VITE_API_URL=http://localhost:5000/api
+EOF
+
+                        docker rm -f frontend backend mongo 2>/dev/null || true
+                        docker compose --env-file .env.deploy -p devops-portfolio-mern up -d
+                        docker compose --env-file .env.deploy -p devops-portfolio-mern ps
+                    '''
+                }
             }
         }
     }
