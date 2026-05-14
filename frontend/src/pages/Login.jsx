@@ -119,7 +119,7 @@ export default function Login() {
               <label className="mb-2 block text-sm text-slate-300">Email</label>
               <input
                 type="email"
-                placeholder="devops@test.com"
+                placeholder="admin@test.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"

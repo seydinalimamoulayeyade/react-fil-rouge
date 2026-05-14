@@ -8,13 +8,14 @@ const {
   deleteProject
 } = require('../controllers/projectController');
 const protect = require('../middleware/authMiddleware');
+const { requireAdmin } = require('../middleware/authMiddleware');
 const upload = require('../middleware/upload');
 
 router.get('/', getProjects);
 router.get('/:id', getProjectById);
 
-router.post('/', protect, upload.single('image'), createProject);
-router.put('/:id', protect, upload.single('image'), updateProject);
-router.delete('/:id', protect, deleteProject);
+router.post('/', protect, requireAdmin, upload.single('image'), createProject);
+router.put('/:id', protect, requireAdmin, upload.single('image'), updateProject);
+router.delete('/:id', protect, requireAdmin, deleteProject);
 
 module.exports = router;

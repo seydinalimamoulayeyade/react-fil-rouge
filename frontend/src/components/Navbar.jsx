@@ -12,7 +12,7 @@ function getNavLinkClass({ isActive }) {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
 
   function handleLogout() {
     logout();
@@ -52,7 +52,7 @@ export default function Navbar() {
           <NavLink to="/projets" className={getNavLinkClass}>
             Projets
           </NavLink>
-          {isAuthenticated ? (
+          {isAdmin ? (
             <NavLink to="/ajouter" className={getNavLinkClass}>
               Ajouter
             </NavLink>
@@ -60,7 +60,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          {isAuthenticated ? (
+          {isAdmin ? (
             <span className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-xs font-medium text-cyan-200">
               <svg
                 aria-hidden="true"
@@ -74,6 +74,10 @@ export default function Navbar() {
                 <path d="m9 12 2 2 4-4" />
               </svg>
               Admin
+            </span>
+          ) : isAuthenticated ? (
+            <span className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs font-medium text-slate-300">
+              Connecte
             </span>
           ) : (
             <span className="inline-flex items-center gap-2 rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-3 py-2 text-xs font-medium text-emerald-300">
@@ -138,23 +142,27 @@ export default function Navbar() {
             </NavLink>
             {isAuthenticated ? (
               <>
-                <div className="inline-flex items-center justify-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-4 py-3 text-sm font-medium text-cyan-200">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="h-4 w-4"
-                  >
-                    <path d="M12 3 20 7v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                  Console admin ouverte
-                </div>
-                <NavLink to="/ajouter" onClick={closeMenu} className={getNavLinkClass}>
-                  Ajouter
-                </NavLink>
+                {isAdmin ? (
+                  <>
+                    <div className="inline-flex items-center justify-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-4 py-3 text-sm font-medium text-cyan-200">
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        className="h-4 w-4"
+                      >
+                        <path d="M12 3 20 7v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z" />
+                        <path d="m9 12 2 2 4-4" />
+                      </svg>
+                      Console admin ouverte
+                    </div>
+                    <NavLink to="/ajouter" onClick={closeMenu} className={getNavLinkClass}>
+                      Ajouter
+                    </NavLink>
+                  </>
+                ) : null}
                 <button
                   type="button"
                   onClick={handleLogout}
