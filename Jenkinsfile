@@ -190,35 +190,29 @@ EOF
                     echo "Docker indisponible: logout ignore."
                 fi
             '''
-            script {
-                try {
-                    emailext(
-                        to: 'seydinalimamoulayeyade@gmail.com',
-                        subject: "[Jenkins] ${currentBuild.currentResult} - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                        body: """
-                            <h2>Resultat : ${currentBuild.currentResult}</h2>
-                            <table>
-                                <tr><td><b>Job</b></td><td>${env.JOB_NAME}</td></tr>
-                                <tr><td><b>Build</b></td><td>#${env.BUILD_NUMBER}</td></tr>
-                                <tr><td><b>Branche</b></td><td>${env.GIT_BRANCH ?: 'N/A'}</td></tr>
-                                <tr><td><b>Tag image</b></td><td>${env.IMAGE_TAG ?: 'N/A'}</td></tr>
-                                <tr><td><b>Duree</b></td><td>${currentBuild.durationString}</td></tr>
-                                <tr><td><b>Logs</b></td><td><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
-                            </table>
-                        """,
-                        mimeType: 'text/html',
-                        attachLog: false
-                    )
-                } catch (err) {
-                    echo "Notification email ignoree: ${err.message}"
-                }
-            }
+            emailext(
+                to: 'ton-email@gmail.com',
+                subject: "[Jenkins] ${currentBuild.result} — ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                    <h2>Résultat : ${currentBuild.result}</h2>
+                    <table>
+                        <tr><td><b>Job</b></td><td>${env.JOB_NAME}</td></tr>
+                        <tr><td><b>Build</b></td><td>#${env.BUILD_NUMBER}</td></tr>
+                        <tr><td><b>Branche</b></td><td>${env.GIT_BRANCH ?: 'N/A'}</td></tr>
+                        <tr><td><b>Tag image</b></td><td>${env.IMAGE_TAG ?: 'N/A'}</td></tr>
+                        <tr><td><b>Durée</b></td><td>${currentBuild.durationString}</td></tr>
+                        <tr><td><b>Logs</b></td><td><a href="${env.BUILD_URL}">${env.BUILD_URL}</a></td></tr>
+                    </table>
+                """,
+                mimeType: 'text/html',
+                attachLog: false
+            )
         }
         success {
-            echo "Pipeline reussi - image publiee : ${env.IMAGE_TAG}"
+            echo "✅ Pipeline reussi — image publiee : ${env.IMAGE_TAG}"
         }
         failure {
-            echo 'Pipeline echoue - nettoyage en cours...'
+            echo '❌ Pipeline echoue — nettoyage en cours...'
             sh '''
                 if command -v docker >/dev/null 2>&1; then
                     docker compose --env-file .env down --remove-orphans -v || true
